@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  /* Nova brand colours */
+  --color-nova-indigo: #1E3A8A;
+  --color-nova-blue: #2563EB;
+  --color-nova-frost: #EEF4FB;
+  --color-nova-night: #0F1B3C;
+  --color-nova-subtle: #F5F7FA;
+
+  /* Cadence gradient colours (used ONLY on "intelligence" in hero) */
+  --color-cadence-pink: #E91E8C;
+  --color-cadence-orange: #F97316;
+
+  /* Text colours */
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-inverse: #FFFFFF;
+
+  /* Accent colours */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-divider: #E5E7EB;
+  --color-gold: #C9A84C;
+
+  /* Typography */
+  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #111827;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-in-overlay {
+  animation: fadeInOverlay 0.4s ease-out forwards;
+}
+
+@keyframes slideUpDialog {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up-overlay {
+  animation: slideUpDialog 0.5s ease-out forwards;
+}
+
+/* Gradient text — ONLY for "intelligence" in hero headline */
+.gradient-text-cadence {
+  background: linear-gradient(90deg, #E91E8C, #F97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Fallback for browsers without background-clip: text */
+@supports not (-webkit-background-clip: text) {
+  .gradient-text-cadence {
+    color: #E91E8C;
+  }
+}
