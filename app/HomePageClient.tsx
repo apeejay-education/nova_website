@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Hero from "@/components/hero/Hero";
+import DashboardPreview from "@/components/hero/DashboardPreview";
 import ProofStrip from "@/components/sections/ProofStrip";
 import PlatformSection from "@/components/sections/PlatformSection";
 import AISection from "@/components/sections/AISection";
+import NovaCommandSection from "@/components/sections/NovaCommandSection";
 import AppStoreSection from "@/components/sections/AppStoreSection";
 import CadenceCareSection from "@/components/sections/CadenceCareSection";
 import MidCTASection from "@/components/sections/MidCTASection";
@@ -19,9 +21,11 @@ export default function HomePageClient() {
   return (
     <>
       <Hero onBookDemo={openModal} />
+      <DashboardPreview />
       <ProofStrip />
       <PlatformSection />
       <AISection />
+      <NovaCommandSection />
       <AppStoreSection />
       <CadenceCareSection />
       <MidCTASection onBookDemo={openModal} />

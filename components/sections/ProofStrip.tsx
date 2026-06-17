@@ -5,17 +5,27 @@ const ICONS = [School, Handshake];
 
 export default function ProofStrip() {
   return (
-    <div className="bg-[#f5f2ee] border-y border-neutral-200">
-      <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-0">
+    <div className="bg-[#0b0f1a] py-5 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-stretch gap-3">
         {PROOF_STRIP.map((item, i) => {
           const Icon = ICONS[i];
           return (
-            <div key={i} className="flex items-center gap-3 sm:px-10">
-              {i > 0 && (
-                <div className="hidden sm:block w-px h-8 bg-neutral-300 mx-2" aria-hidden="true" />
-              )}
-              <Icon size={18} className="text-[#2563EB] shrink-0" />
-              <p className="text-[14px] font-medium text-[#111827]">{item.text}</p>
+            <div
+              key={i}
+              className="flex-1 flex items-center gap-3 backdrop-blur-sm bg-white/[0.06] border border-white/[0.10] rounded-2xl px-6 py-4"
+            >
+              <div className="w-9 h-9 rounded-xl bg-[#2563EB]/20 border border-[#2563EB]/30 flex items-center justify-center shrink-0">
+                <Icon size={16} className="text-[#2563EB]" strokeWidth={1.75} />
+              </div>
+              <p
+                className="text-white/80 font-medium"
+                style={{
+                  fontSize: "clamp(13px, 2.5vw, 15px)",
+                  fontFamily: "var(--font-inter), system-ui, sans-serif",
+                }}
+              >
+                {item.text}
+              </p>
             </div>
           );
         })}

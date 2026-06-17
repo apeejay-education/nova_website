@@ -1,158 +1,148 @@
-"use client";
+import {
+  GraduationCap, Wallet, CalendarCheck, Bus,
+  Building2, BookOpen, Monitor, Bell, Sparkles, Zap, Layers,
+} from "lucide-react";
 
-import { useState } from "react";
-import { TrendingUp, TrendingDown, ChevronDown, X } from "lucide-react";
-import Gauge from "./Gauge";
+// ─── Card 1: Blazing Fast ERP ─────────────────────────────────────────────────
 
-// ─── Card 1: Fee Collection ───────────────────────────────────────────────────
+function BlazingFastCard() {
+  const metrics = [
+    { label: "Student search",  pct: 96, ms: "0.1s" },
+    { label: "Fee dashboard",   pct: 84, ms: "0.2s" },
+    { label: "Attendance mark", pct: 72, ms: "0.3s" },
+  ];
 
-function FeeCard() {
-  const [activeToggle, setActiveToggle] = useState<"online" | "cash">("online");
   return (
-    <div className="bg-white rounded-2xl p-5 flex flex-col gap-3">
+    <div className="bg-white rounded-2xl p-5 flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <span className="text-[13px] font-semibold text-[#2563EB]">Fee Collection</span>
-        <span className="text-[13px] text-neutral-500">This Month</span>
+        <div className="flex items-center gap-1.5">
+          <Zap size={14} className="text-[#2563EB]" strokeWidth={2.5} />
+          <span className="text-[13px] font-semibold text-[#2563EB]">Blazing Fast ERP</span>
+        </div>
+        <span className="inline-flex items-center gap-1 bg-green-50 text-green-600 rounded-full px-2 py-0.5 text-[10px] font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+          Live
+        </span>
       </div>
 
       <div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[28px] font-semibold text-[#111827] leading-none">₹2,84,500</span>
-          <span className="inline-flex items-center gap-1 bg-green-50 text-green-600 rounded-full px-2 py-0.5 text-[11px] font-medium">
-            <TrendingUp size={11} strokeWidth={2.5} />
-            +₹24K (9%)
-          </span>
+        <div className="flex items-end gap-1 leading-none">
+          <span className="text-[38px] font-semibold text-[#111827]">&lt;&nbsp;0.3</span>
+          <span className="text-[20px] font-medium text-neutral-400 mb-1">s</span>
         </div>
-        <p className="text-[12px] text-neutral-400 mt-1">Compared to last month</p>
+        <p className="text-[12px] text-neutral-400 mt-0.5">Average response, any module</p>
       </div>
 
-      <div className="text-center">
-        <p className="text-[12px] text-neutral-500 font-medium">Monthly target achieved</p>
-      </div>
-
-      <div className="flex justify-center">
-        <Gauge value={85} color="#2563EB" showLabels min="₹0" max="₹3L" />
-      </div>
-
-      {/* Toggle */}
-      <div className="bg-neutral-100 rounded-full p-1 flex">
-        {(["online", "cash"] as const).map((t) => (
-          <button
-            key={t}
-            onClick={() => setActiveToggle(t)}
-            className={`flex-1 py-1.5 rounded-full text-[12px] font-medium capitalize transition-all ${
-              activeToggle === t ? "bg-white shadow-sm text-[#111827]" : "text-neutral-500"
-            }`}
-          >
-            {t === "online" ? "Online" : "Cash"}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ─── Card 2: Settings / Targets ──────────────────────────────────────────────
-
-function SettingsCard() {
-  return (
-    <div className="bg-white rounded-2xl p-5 flex flex-col gap-3">
-      {/* Dropdown fields */}
-      {[
-        { label: "Show figures for", value: "This month" },
-        { label: "Compare period by", value: "Month-to-date (MTD)" },
-      ].map((f) => (
-        <div key={f.label}>
-          <p className="text-[12px] text-neutral-700 mb-1">{f.label}</p>
-          <button className="w-full flex items-center justify-between border border-neutral-200 rounded-lg px-3 py-2 text-[13px] text-[#111827] hover:border-neutral-300 transition-colors">
-            {f.value}
-            <ChevronDown size={14} className="text-neutral-400 shrink-0" />
-          </button>
-        </div>
-      ))}
-
-      {/* Number inputs */}
-      {[
-        { label: "Fee target (This month)", value: "3,00,000" },
-        { label: "Fee target (This year)", value: "36,00,000" },
-      ].map((f) => (
-        <div key={f.label}>
-          <p className="text-[12px] text-neutral-700 mb-1">{f.label}</p>
-          <div className="flex items-center border border-neutral-200 rounded-lg px-3 py-2 gap-2">
-            <span className="text-neutral-400 text-[13px]">₹</span>
-            <span className="text-[13px] text-[#111827]">{f.value}</span>
+      <div className="space-y-2.5">
+        {metrics.map((m) => (
+          <div key={m.label} className="flex items-center gap-2">
+            <span className="text-[11px] text-neutral-500 w-28 shrink-0">{m.label}</span>
+            <div className="flex-1 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+              <div className="h-full bg-[#2563EB] rounded-full" style={{ width: `${m.pct}%` }} />
+            </div>
+            <span className="text-[11px] text-neutral-400 w-7 text-right shrink-0">{m.ms}</span>
           </div>
-        </div>
-      ))}
-
-      {/* Footer */}
-      <div className="flex items-center gap-3 pt-1">
-        <button className="bg-[#2563EB] text-white text-[13px] font-medium rounded-lg px-5 py-2 hover:bg-[#1D4ED8] transition-colors">
-          Save
-        </button>
-        <button className="text-[13px] text-neutral-500 underline underline-offset-2">Cancel</button>
-        <button className="ml-auto text-neutral-400 hover:text-neutral-600 transition-colors">
-          <X size={16} />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ─── Card 3: Attendance ───────────────────────────────────────────────────────
-
-function AttendanceCard() {
-  const [activeToggle, setActiveToggle] = useState<"present" | "absent">("present");
-  return (
-    <div className="bg-white rounded-2xl p-5 flex flex-col gap-3">
-      <div className="flex items-center justify-between">
-        <span className="text-[13px] font-semibold text-[#2563EB]">Attendance</span>
-        <span className="text-[13px] text-neutral-500">today</span>
-      </div>
-
-      <div>
-        <div className="flex items-center gap-2">
-          <span className="text-[28px] font-semibold text-[#111827] leading-none">92%</span>
-          <span className="inline-flex items-center gap-1 bg-neutral-100 text-neutral-600 rounded-full px-2 py-0.5 text-[11px] font-medium">
-            <TrendingUp size={11} strokeWidth={2.5} />
-            +2%
-          </span>
-        </div>
-        <p className="text-[12px] text-neutral-400 mt-1">Compared to yesterday</p>
-      </div>
-
-      <div className="flex justify-center">
-        <Gauge value={92} color="#9ca3af" showLabels={false} />
-      </div>
-
-      {/* Toggle */}
-      <div className="bg-neutral-100 rounded-full p-1 flex">
-        {(["present", "absent"] as const).map((t) => (
-          <button
-            key={t}
-            onClick={() => setActiveToggle(t)}
-            className={`flex-1 py-1.5 rounded-full text-[12px] font-medium capitalize transition-all ${
-              activeToggle === t ? "bg-white shadow-sm text-[#111827]" : "text-neutral-500"
-            }`}
-          >
-            {t === "present" ? "Present" : "Absent"}
-          </button>
         ))}
       </div>
     </div>
   );
 }
 
-// ─── Dashboard container ──────────────────────────────────────────────────────
+// ─── Card 2: AI Enabled ───────────────────────────────────────────────────────
+
+function AIEnabledCard() {
+  return (
+    <div className="bg-white rounded-2xl p-5 flex flex-col gap-3">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <Sparkles size={14} className="text-[#2563EB]" strokeWidth={2} />
+          <span className="text-[13px] font-semibold text-[#2563EB]">AI Enabled</span>
+        </div>
+        <span className="inline-flex items-center gap-1 bg-green-50 text-green-600 rounded-full px-2 py-0.5 text-[10px] font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+          Ask Nova · Live
+        </span>
+      </div>
+
+      <div className="bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2.5 flex items-center gap-2">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" className="text-neutral-400 shrink-0">
+          <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M9.5 9.5l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+        <span className="text-[13px] text-neutral-500 flex-1">Fees overdue in Grade 10</span>
+        <span className="w-5 h-5 rounded-md bg-[#2563EB] flex items-center justify-center text-white text-[10px] shrink-0">↵</span>
+      </div>
+
+      <div className="bg-[#EEF4FB] rounded-xl px-4 py-3">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[13px] font-semibold text-[#111827]">12 students found</span>
+          <span className="text-[10px] text-neutral-400">0.3s</span>
+        </div>
+        <p className="text-[14px] font-semibold text-[#2563EB]">₹1,84,500 overdue</p>
+      </div>
+
+      <p className="text-[11px] text-neutral-400 text-center">Natural language. Zero training needed.</p>
+    </div>
+  );
+}
+
+// ─── Card 3: All in One Modular ───────────────────────────────────────────────
+
+const MODULES = [
+  { name: "SIS",       Icon: GraduationCap },
+  { name: "Fees",      Icon: Wallet },
+  { name: "Attend",    Icon: CalendarCheck },
+  { name: "Transport", Icon: Bus },
+  { name: "Hostel",    Icon: Building2 },
+  { name: "Library",   Icon: BookOpen },
+  { name: "LMS",       Icon: Monitor },
+  { name: "Comms",     Icon: Bell },
+] as const;
+
+function AllInOneCard() {
+  return (
+    <div className="bg-white rounded-2xl p-5 flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <Layers size={14} className="text-[#2563EB]" strokeWidth={2} />
+          <span className="text-[13px] font-semibold text-[#2563EB]">All-in-One Modular</span>
+        </div>
+        <span className="text-[12px] text-neutral-400">8 modules</span>
+      </div>
+
+      <div>
+        <div className="text-[38px] font-semibold text-[#111827] leading-none">₹0</div>
+        <p className="text-[12px] text-neutral-400 mt-0.5">hidden add-ons. Ever.</p>
+      </div>
+
+      <div className="grid grid-cols-4 gap-2">
+        {MODULES.map(({ name, Icon }) => (
+          <div key={name} className="flex flex-col items-center gap-1.5">
+            <div className="w-9 h-9 rounded-xl bg-[#f5f2ee] flex items-center justify-center">
+              <Icon size={15} className="text-[#2563EB]" strokeWidth={1.75} />
+            </div>
+            <span className="text-[9px] text-neutral-400 text-center leading-tight">{name}</span>
+          </div>
+        ))}
+      </div>
+
+      <p className="text-[11px] text-neutral-400 text-center border-t border-neutral-100 pt-3">
+        All included. One price. Always.
+      </p>
+    </div>
+  );
+}
+
+// ─── Standalone section ───────────────────────────────────────────────────────
 
 export default function DashboardPreview() {
   return (
-    <div className="w-full flex-1 flex flex-col justify-end px-3 sm:px-4 mt-6 sm:mt-8">
+    <div className="bg-[#ededed] px-3 sm:px-4 pb-3 sm:pb-4">
       <div className="bg-[#f5f2ee] rounded-3xl p-4 sm:p-6 w-full max-w-[880px] mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          <FeeCard />
-          <SettingsCard />
-          <AttendanceCard />
+          <BlazingFastCard />
+          <AIEnabledCard />
+          <AllInOneCard />
         </div>
       </div>
     </div>

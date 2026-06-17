@@ -1,52 +1,107 @@
-import { Users, Banknote, Heart, Briefcase, GitBranch, Package, ArrowRight } from "lucide-react";
-import { APPSTORE_SECTION, APPSTORE_MODULES } from "@/lib/constants";
+"use client";
+
+import { useState } from "react";
+import { Users, Banknote, Heart, Briefcase, GitBranch, Package } from "lucide-react";
+import { APPSTORE_MODULES } from "@/lib/constants";
 import AnimateIn from "@/components/ui/AnimateIn";
 
-const APP_ICONS = [Users, Banknote, Heart, Briefcase, GitBranch, Package];
+const APP_ICONS = [Users, Banknote, Heart, Briefcase, GitBranch, Package] as const;
+
+const BENTO_SPANS = [
+  "col-span-1 row-span-2",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-1 row-span-1",
+  "col-span-2 row-span-1",
+] as const;
 
 export default function AppStoreSection() {
+  const [active, setActive] = useState(0);
+  const mod = APPSTORE_MODULES[active];
+  const ActiveIcon = APP_ICONS[active];
+
   return (
     <section className="bg-[#f5f2ee] py-24 px-6">
       <div className="max-w-7xl mx-auto">
+
         <AnimateIn className="text-center mb-12">
+          <p className="text-[11px] font-semibold tracking-widest text-[#2563EB] uppercase mb-3">Nova AppStore</p>
           <h2 className="text-[36px] lg:text-[44px] font-medium tracking-tight text-[#111827] leading-tight">
-            {APPSTORE_SECTION.headline}
+            Extend Nova for your{" "}
+            <span
+              style={{
+                fontFamily: "var(--font-instrument-serif), 'Georgia', serif",
+                fontStyle: "italic",
+                fontWeight: 400,
+              }}
+            >
+              institution.
+            </span>
           </h2>
-          <p className="mt-4 text-base text-neutral-500 max-w-xl mx-auto">
-            {APPSTORE_SECTION.sub}
+          <p className="mt-3 text-base text-neutral-500 max-w-lg mx-auto">
+            Add purpose-built modules on top of your core plan — only what you need.
           </p>
         </AnimateIn>
 
-        <AnimateIn delay={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {APPSTORE_MODULES.map((mod, i) => {
-            const Icon = APP_ICONS[i];
-            return (
-              <div
-                key={mod.id}
-                className="bg-white border border-neutral-200 rounded-2xl p-6 flex flex-col gap-3 transition-all duration-200 hover:shadow-[0_4px_24px_rgba(0,0,0,0.08)] hover:-translate-y-0.5"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-[#f5f2ee] flex items-center justify-center">
-                    <Icon size={20} className="text-[#2563EB]" />
+        <AnimateIn delay={0.1}>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-start">
+
+            {/* Bento grid */}
+            <div className="lg:col-span-3 grid grid-cols-2 gap-3" style={{ gridTemplateRows: "140px 140px 140px" }}>
+              {APPSTORE_MODULES.map((m, i) => {
+                const Icon = APP_ICONS[i];
+                const isActive = i === active;
+                return (
+                  <button
+                    key={m.id}
+                    onClick={() => setActive(i)}
+                    className={`${BENTO_SPANS[i]} rounded-2xl p-5 text-left flex flex-col justify-between transition-all duration-200 border-2 ${
+                      isActive
+                        ? "bg-[#111827] border-[#111827] shadow-lg scale-[1.01]"
+                        : "bg-white border-transparent hover:border-neutral-200"
+                    }`}
+                  >
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isActive ? "bg-white/15" : "bg-[#f5f2ee]"}`}>
+                      <Icon size={18} className={isActive ? "text-white" : "text-[#2563EB]"} />
+                    </div>
+                    <div>
+                      <p className={`text-[14px] font-semibold leading-snug ${isActive ? "text-white" : "text-[#111827]"}`}>
+                        {m.name}
+                      </p>
+                      <p className={`text-[11px] mt-0.5 ${isActive ? "text-white/50" : "text-neutral-400"}`}>
+                        Add-on
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Contextual panel */}
+            <div className="lg:col-span-2 rounded-2xl overflow-hidden bg-white border border-neutral-200 flex flex-col">
+              <div className="aspect-video bg-[#111827] relative overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/assets/images/appstore-contextual.jpg"
+                  alt={mod.name}
+                  className="w-full h-full object-cover opacity-70"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/80 to-transparent" />
+                <div className="absolute bottom-4 left-4 flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                    <ActiveIcon size={16} className="text-white" />
                   </div>
-                  <div className="flex items-center gap-1.5 bg-neutral-100 rounded-full px-3 py-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-neutral-400" />
-                    <span className="text-[11px] font-medium text-neutral-500">Add-on</span>
-                  </div>
+                  <span className="text-white font-semibold text-sm">{mod.name}</span>
                 </div>
-                <h3 className="text-[14px] font-semibold text-[#111827]">{mod.name}</h3>
-                <p className="text-sm text-neutral-500 leading-relaxed flex-1">{mod.description}</p>
+              </div>
+              <div className="p-6 flex flex-col gap-3 flex-1">
+                <p className="text-[13px] text-neutral-500 leading-relaxed">{mod.description}</p>
                 <p className="text-xs font-medium text-[#2563EB]">Best for: {mod.bestFor}</p>
               </div>
-            );
-          })}
-        </AnimateIn>
+            </div>
 
-        <AnimateIn delay={0.2} className="text-center mt-10">
-          <a href="/book-demo" className="inline-flex items-center gap-1.5 text-[#2563EB] font-medium hover:underline underline-offset-2">
-            {APPSTORE_SECTION.linkText}
-            <ArrowRight size={16} />
-          </a>
+          </div>
         </AnimateIn>
       </div>
     </section>

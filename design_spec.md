@@ -1,7 +1,7 @@
 # design_spec.md — Cadence Nova Visual Design Specification
 
 > Referenced by: `CLAUDE.md` | Used by: designer, frontend developer
-> This file defines every visual decision for nova.cadenceinfotech.com.
+> Last updated: June 2026 — reflects cinematic redesign with glassmorphism system.
 
 ---
 
@@ -9,15 +9,14 @@
 
 ### Wordmark
 - **Text:** "Cadence Nova"
-- **"Cadence"** — font weight 300–400 (Light/Regular)
-- **"Nova"** — font weight 700–800 (Bold/ExtraBold)
-- **Colour:** Nova Indigo `#1E3A8A`
-- **Logic:** Cadence = institutional trust, Nova = product identity
+- **"Cadence"** — weight 300–400 (Light/Regular)
+- **"Nova"** — weight 700–800 (Bold/ExtraBold)
+- **Dark contexts:** white text; **Light contexts:** `#111827`
 
-### Product Colour Family (Future Reference)
+### Product Colour Family
 | Product | Colour |
 |---------|--------|
-| Cadence Nova | Deep Indigo `#1E3A8A` |
+| Cadence Nova | Near-black `#0b0f1a` + Nova Blue `#2563EB` |
 | Cadence Gurukul | Green (TBD) |
 | Cadence Cognify | Purple (TBD) |
 | Cadence Sprouts | Orange (TBD) |
@@ -26,549 +25,366 @@
 
 ## 2. Colour Palette
 
-> **Design direction (updated June 2026):** Premium, minimal, Apple-inspired aesthetic. Neutral warm grays as canvas with `#111827` near-black for all type. Nova Blue `#2563EB` is an accent only — not used for large backgrounds or heavy elements. The only dark section is the AI section which uses `#0b0f1a`.
-
-### Primary Palette
+### Core Colours
 
 ```css
-/* Nova Blue — CTAs, links, active states, icon tints */
---color-nova-blue: #2563EB;
+/* Nova Blue — accent only: CTAs, icons, links, badges, active states */
+--nova-blue: #2563EB;
 
-/* Near Black — ALL headlines across every section */
---color-text-headline: #111827;
+/* Near Black — dark sections, hero container bg, footer, AI section */
+--dark-bg: #0b0f1a;
 
-/* Cadence Gradient — ONLY on "intelligence" in hero headline. Nowhere else. */
---gradient-cadence: linear-gradient(90deg, #E91E8C, #F97316);
+/* Deeper Black — Nova Command section bg */
+--deeper-bg: #070a12;
+
+/* Near Black Text — ALL headlines on light backgrounds */
+--text-headline: #111827;
+
+/* Medium Gray — body copy, descriptions, captions */
+--text-body: #6B7280;      /* or neutral-500 */
+
+/* White — text on dark backgrounds */
+--text-inverse: #FFFFFF;
+
+/* Muted White — secondary text on dark */
+--text-dark-secondary: #94A3B8;
 ```
 
-### Background Palette
+### Background Rhythm (homepage top-to-bottom)
 
+| Section | Background | Notes |
+|---------|-----------|-------|
+| Hero outer wrapper | `#ededed` | 12–16px outer frame |
+| Hero inner container | `#0b0f1a` (+ video) | `overflow-hidden rounded-3xl` |
+| Dashboard tray | `#ededed` outer / `#f5f2ee` tray | sits outside hero container |
+| ProofStrip | `#0b0f1a` | dark bridge, glassmorphism boxes |
+| PlatformSection | `#ffffff` | white |
+| AISection | `#0b0f1a` | dark |
+| NovaCommandSection | `#070a12` | deeper dark |
+| AppStoreSection | `#f5f2ee` | warm gray |
+| CadenceCareSection | `#0b0f1a` + video | cinematic |
+| MidCTASection | `#f5f2ee` | warm gray |
+| ComparisonSection | `#f5f2ee` | warm gray |
+| Pre-footer | `#ffffff` | white |
+| Footer | `#0b0f1a` | dark |
+
+### Warm Light Grays
 ```css
-/* Hero outer wrapper */
---color-bg-hero-outer: #ededed;
-
-/* Hero inner container */
---color-bg-hero-inner: #d9d9d9;
-
-/* Dashboard tray / warm light section (ProofStrip, AppStore, Comparison, MidCTA) */
---color-bg-warm: #f5f2ee;
-
-/* White — alternating section canvas (Platform, CadenceCare, pre-footer) */
---color-bg-white: #FFFFFF;
-
-/* Dark — AI section and footer ONLY */
---color-bg-dark: #0b0f1a;
-
-/* Table row alternate */
---color-bg-row-alt: #f9f8f6;
-```
-
-### Text Palette
-
-```css
-/* Near Black — ALL headlines, card titles, primary body */
---color-text-primary: #111827;
-
-/* Medium Gray — subtext, captions, meta, descriptions */
---color-text-secondary: #6B7280; /* or neutral-500 */
-
-/* Light Gray — placeholder, muted labels */
---color-text-muted: #9CA3AF;
-
-/* White — text on dark backgrounds (#0b0f1a sections) */
---color-text-inverse: #FFFFFF;
-
-/* Muted white — secondary text on dark bg */
---color-text-dark-secondary: #94A3B8;
-```
-
-### Accent Palette
-
-```css
-/* Growth Green — ✓ checkmarks, "Available Now" badge bg */
---color-success: #16A34A;
-
-/* Amber — "Coming Soon" badges (Tell Nova — never change status) */
---color-warning: #F59E0B;
-
-/* Error / cross marks */
---color-error: #EF4444;
-
-/* Neutral dividers */
---color-divider: #E5E7EB; /* border-neutral-200 */
-```
-
-### Tailwind v4 CSS tokens (in `globals.css @theme`)
-
-```css
-/* Project uses Tailwind v4 — no tailwind.config.js. Tokens live in globals.css */
-@theme {
-  --color-nova-indigo: #1E3A8A;   /* keep for inner pages using PageHero */
-  --color-nova-blue: #2563EB;
-  --color-nova-frost: #EEF4FB;    /* keep for inner pages */
-  --color-nova-night: #0F1B3C;    /* keep for inner pages */
-  --color-nova-subtle: #F5F7FA;
-  --color-cadence-pink: #E91E8C;
-  --color-cadence-orange: #F97316;
-}
-/* Homepage sections use raw hex values (#f5f2ee, #0b0f1a, #111827) for precision */
+--bg-warm-tray:   #f5f2ee;   /* dashboard tray, card bg */
+--bg-warm-section: #f5f2ee;  /* AppStore, Comparison, MidCTA */
+--bg-hero-frame:  #ededed;   /* hero outer padding bg */
+--bg-row-alt:     #f9f8f6;   /* comparison table odd rows */
 ```
 
 ---
 
 ## 3. Typography
 
-### Font Family
-- **Primary:** [Inter](https://fonts.google.com/specimen/Inter) — loaded via `next/font/google`, CSS var `--font-inter`
-- **Serif accent:** [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif) — italic only, CSS var `--font-instrument-serif`
+### Font Stack
+- **Primary (all body & headlines):** Inter — loaded via `next/font/google`, CSS var `--font-inter`
+- **Serif accent (italic only):** Instrument Serif — CSS var `--font-instrument-serif`
 - **Fallback:** `Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif`
+- **Monospace (kbd elements):** system monospace
 
-### Type Scale (updated June 2026)
+### Type Scale
 
-| Role | Tag | Weight | Desktop | Mobile | Notes |
-|------|-----|--------|---------|--------|-------|
-| Hero Headline | h1 | 500 Medium | `clamp(34px, 7.5vw, 72px)` | 34px | `tracking-[-0.02em]`, `line-height: 1.05` |
-| Section Headline | h2 | 500 Medium | 36–44px | 28px | `tracking-tight`, lighter than before |
-| Italic tagline | span | 400 Regular | same as h2 | same | Instrument Serif italic — used in h2 line 2 |
-| Sub-headline / card title | h3 | 600 SemiBold | 14–20px | 14px | `text-[#111827]` — NOT indigo |
-| Body / description | p | 400 Regular | 14–16px | 14px | `text-neutral-500` |
-| Labels / meta | span | 500 Medium | 11–13px | 11px | |
-| CTA button text | button | 500 Medium | 14–15px | 14px | pill shape, dark bg |
-| Nav items | a | 400–500 | 14px | — | |
-| Eyebrow / badge | span | 600 SemiBold | 11–12px | 11px | uppercase, tracking-wide |
+| Role | Tag | Weight | Size (desktop) | Size (mobile) |
+|------|-----|--------|----------------|---------------|
+| Hero h1 | h1 | 500 Medium | `clamp(32px, 7vw, 68px)` | 32px |
+| Section h2 | h2 | 500 Medium | 36–44px | 28px |
+| Card title | h3 | 600 SemiBold | 14–20px | 14px |
+| Body | p | 400 Regular | 14–16px | 14px |
+| Meta / label | span | 500 Medium | 11–13px | 11px |
+| CTA button | button | 500 Medium | 14–15px | 14px |
+| Eyebrow badge | span | 600 SemiBold | 10–12px | 10px |
+| Nav item | a | 400 Regular | 14px | — |
 
-### Instrument Serif Usage Rules
-- **Use:** Second line of section h2 headlines for an editorial feel (e.g., `One platform.` in hero, `Inside one platform.` in PlatformSection)
-- **Do not use** for body copy, card titles, buttons, or nav items
-- Always `fontStyle: "italic"`, `fontWeight: 400`
+### Instrument Serif Rules
+- **Use ONLY for:** second line of hero/section h2 headlines (italic editorial accent)
+- **Never use for:** body copy, card titles, nav, buttons
+- Always: `fontStyle: "italic"`, `fontWeight: 400`
 - Applied inline: `style={{ fontFamily: "var(--font-instrument-serif), 'Georgia', serif", fontStyle: "italic", fontWeight: 400 }}`
 
 ### Letter Spacing
-- Headlines: `tracking-tight` (Tailwind = `-0.025em`)
-- Hero h1: `letterSpacing: "-0.02em"` (inline)
-- Body: `normal`
-- Badges/eyebrows: `tracking-wide`
+- Headlines: `tracking-tight` (–0.025em) or inline `letterSpacing: "-0.02em"`
+- Eyebrows/badges: `tracking-wide` or `tracking-widest`
+- Body: default
 
 ---
 
-## 4. Spacing System
+## 4. Glassmorphism System
 
-Use Tailwind's default 4px base spacing. Key spacings:
+The primary visual language for elements layered over video backgrounds or dark sections.
 
+### Dark Glassmorphism (on `#0b0f1a` or video bg)
+```css
+/* Cards, proof boxes, feature tiles on dark background */
+background: rgba(255, 255, 255, 0.06);
+border: 1px solid rgba(255, 255, 255, 0.10);
+backdrop-filter: blur(12px);
+border-radius: 16px; /* rounded-2xl */
+
+/* Tailwind: bg-white/[0.06] border border-white/[0.10] backdrop-blur-sm rounded-2xl */
 ```
-Section padding (vertical): py-24 (96px desktop) / py-16 (64px mobile)
-Section padding (horizontal): px-6 (24px mobile) / container max-w-7xl mx-auto (desktop)
-Card padding: p-8 (32px)
-Card gap in grid: gap-6 (24px)
-Between headline and subtext: mb-4 (16px)
-Between subtext and CTA: mt-8 (32px)
+
+### Light Glassmorphism (on hero video, overlaid text containers)
+```css
+/* Hero headline glass card */
+background: rgba(255, 255, 255, 0.07);
+border: 1px solid rgba(255, 255, 255, 0.12);
+backdrop-filter: blur(16px); /* backdrop-blur-md */
+border-radius: 16px;
+
+/* Subtitle branded box */
+background: rgba(37, 99, 235, 0.18);
+border: 1px solid rgba(37, 99, 235, 0.32);
+backdrop-filter: blur(8px);
+border-radius: 12px;
+```
+
+### Nova Blue Tint Glass (accent containers)
+```css
+background: rgba(37, 99, 235, 0.12–0.18);
+border: 1px solid rgba(37, 99, 235, 0.25–0.32);
+backdrop-filter: blur(8px);
 ```
 
 ---
 
 ## 5. Component Specifications
 
-### 5.1 CTA Buttons
-
-**Primary — "Book a Demo"** (hero style — used across homepage)
+### 5.1 Primary CTA Button ("Book a Demo")
 ```css
-background: #0b0f1a;  /* near-black — matches hero CTA */
+background: #0b0f1a;   /* near-black */
 color: #FFFFFF;
-border-radius: 9999px; /* pill */
-padding: 10px 28px 10px 8px; /* right side has circle icon */
+border-radius: 9999px;
+padding: 10px 28px 10px 8px;   /* pill with circle icon on right */
 font-size: 14–15px;
 font-weight: 500;
+transition: background 200ms;
 
-/* Circle icon on right */
 .icon-circle {
-  width: 28px; height: 28px;
-  border-radius: 9999px;
+  width: 26–28px; height: 26–28px;
   background: rgba(255,255,255,0.15);
-  display: flex; align-items: center; justify-content: center;
+  border-radius: 9999px;
 }
 
-hover: background: #1f2937;
-```
+hover: background #1f2937;
 
-**Ghost / Text Link**
-```css
-color: #2563EB;
-font-weight: 500;
-text-decoration: underline on hover;
-underline-offset: 2px;
-```
-
-### 5.2 Navigation Bar
-
-```css
-position: fixed;
-top: 0;
-width: 100%;
+/* On dark video hero — use white bg + dark text */
 background: #FFFFFF;
-z-index: 50;
-height: 64px;
-padding: 0 24px;
-
-/* On scroll — add shadow */
-box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+color: #0b0f1a;
 ```
 
-Nav items: 15px, weight 500, color `#111827`, hover color `#1E3A8A`
-
-### 5.3 Module Cards (Section 03)
-
-```css
-background: #FFFFFF;
-border: 1px solid #E5E7EB; /* border-neutral-200 */
-border-radius: 16px; /* rounded-2xl */
-padding: 24px;
-transition: box-shadow 200ms ease, transform 200ms ease;
-
-hover:
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);  /* neutral shadow, not blue-tinted */
-  transform: translateY(-2px);
-```
-
-Icon container: 40×40px, `bg-[#f5f2ee]` rounded-xl, `text-[#2563EB]` icon
-Module name: 14px, SemiBold, `#111827` (NOT indigo)
-Description: 14px, Regular, `text-neutral-500`
-
-### 5.4 Social Proof Strip
-
-```css
-background: #f5f2ee;  /* warm light gray — updated from frost blue */
-border-top: 1px solid #E5E7EB;
-border-bottom: 1px solid #E5E7EB;
-padding: 20px 24px;
-```
-
-Text: 14px, weight 500, `#111827`. Icon 18px `text-[#2563EB]`.
-Vertical divider: 1px solid `#D1D5DB` (neutral-300), height 32px.
-
-### 5.5 Comparison Table
-
-```css
-/* Header row — updated */
-background: #0b0f1a;  /* deep dark, matches footer */
-color: #FFFFFF;
-font-weight: 600;
-font-size: 14px;
-
-/* Alternating rows */
-even: background: #FFFFFF;
-odd: background: #f9f8f6;
-
-/* ✓ checkmarks */
-color: #16A34A; font-weight: 700;
-
-/* ✗ crosses */
-color: #EF4444; font-weight: 700;
-
-/* ⚠ warnings */
-color: #D97706; font-weight: 700;
-
-/* Top accent border — Nova Blue */
-border-top: 3px solid #2563EB;
-
-/* Integration logo pills */
-background: #FFFFFF;
-border: 1px solid #E5E7EB;
-border-radius: 12px;
-```
-
-### 5.6 Form Fields
-
-```css
-/* Input */
-border: 1px solid #D1D5DB;
-border-radius: 8px;
-padding: 12px 16px;
-font-size: 16px;
-background: #FFFFFF;
-
-focus:
-  border-color: #2563EB;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-
-/* Label */
-font-size: 14px;
-font-weight: 500;
-color: #374151;
-margin-bottom: 6px;
-```
-
-### 5.7 Status Badges
-
-```css
-/* "Available Now" — Ask Nova */
-background: #DCFCE7;
-color: #16A34A;
-font-size: 12px;
-font-weight: 600;
-padding: 2px 10px;
-border-radius: 9999px;
-display: inline-flex;
-align-items: center;
-gap: 6px;
-/* dot: 6px circle, background #16A34A */
-
-/* "Coming Soon" — Tell Nova */
-background: #FEF3C7;
-color: #B45309;
-/* dot: 6px circle, background #F59E0B */
-```
-
-### 5.8 Section Divider
-
-```css
-/* Between major sections */
-border: none;
-border-top: 1px solid #E5E7EB;
-margin: 0;
-```
-
-### 5.9 Callout / Highlight Box
-
-```css
-/* Light callout (e.g., Nova Lounge strip) */
-background: #f5f2ee;
-border-left: 4px solid #2563EB;
-border-radius: 0 16px 16px 0; /* rounded-r-2xl */
-padding: 20px 24px;
-font-size: 14–16px;
-color: #111827;
-```
-
-Dark variant (inside dark AI section):
-```css
-background: rgba(255,255,255,0.04);
-border: 1px solid rgba(255,255,255,0.08);
-border-radius: 16px;
-color: #E2E8F0;
-```
-
-### 5.10 Section Background Rhythm (homepage)
-
-| Section | Background | Notes |
-|---------|-----------|-------|
-| Hero | `#ededed` outer / `#d9d9d9` inner | Convix-style clipped container |
-| ProofStrip | `#f5f2ee` | warm gray |
-| PlatformSection | `#ffffff` | white |
-| AISection | `#0b0f1a` | only dark section |
-| AppStoreSection | `#f5f2ee` | warm gray |
-| CadenceCareSection | `#ffffff` | white |
-| MidCTASection | `#f5f2ee` | warm gray, dark pill CTA button |
-| ComparisonSection | `#f5f2ee` | warm gray |
-| Pre-footer | `#ffffff` | white |
-| Footer | `#0b0f1a` | matches AI section |
-
----
-
-## 6. Hero Module Diagram
-
-The central visual element of the homepage hero. Built as SVG or React component.
-
-**Structure:**
-- Central hub: Circle, 80px diameter, Nova Indigo `#1E3A8A`, white "Nova" text
-- 8 spokes: Lines from hub to 8 node circles, stroke `#CBD5E1`, 1.5px
-- Node circles: 56px diameter, white fill, Nova Blue `#2563EB` border 2px
-- Node icons: 24px, Nova Blue
-- Node labels: 12px, SemiBold, `#111827`, below node circle
-
-**Animation (optional, desktop only):**
-```css
-/* Pulse on hub */
-@keyframes pulse-hub {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(30,58,138,0.3); }
-  50% { box-shadow: 0 0 0 12px rgba(30,58,138,0); }
-}
-
-/* Spoke draw-in on load */
-stroke-dasharray: 100;
-stroke-dashoffset: 100;
-animation: draw 0.6s ease forwards;
-animation-delay: calc(var(--i) * 0.1s);
-
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
-}
-```
-
-**8 Nodes (clockwise from top):**
-1. Student Info System (graduation cap)
-2. Fee Management (rupee coin)
-3. Attendance (calendar check)
-4. Transport (bus)
-5. Hostel (building)
-6. Library (open book)
-7. LMS / Learning (screen)
-8. Communication (bell)
-
----
-
-## 7. Dark Section — Nova AI (Section 04)
-
-```css
-background: #0b0f1a;  /* updated: matches hero CTA button and footer */
-color: #FFFFFF;
-padding: 96px 24px;
-```
-
-**AI Feature Cards:**
-```css
-background: rgba(255, 255, 255, 0.05);
-border: 1px solid rgba(255, 255, 255, 0.10);
-border-radius: 16px;
-padding: 32px;
-backdrop-filter: blur(8px);
-```
-
-Card headline: 24px, Bold, white
-Card copy: 16px, Regular, `#CBD5E1`
-
-**Nova Command strip (bottom of dark section):**
-```css
-background: rgba(37, 99, 235, 0.15);
-border: 1px solid rgba(37, 99, 235, 0.30);
-border-radius: 12px;
-padding: 24px 32px;
-```
-
-⌘K keyboard shortcut display:
+### 5.2 Secondary CTA ("Play Exclusive Preview")
 ```css
 background: rgba(255,255,255,0.10);
 border: 1px solid rgba(255,255,255,0.20);
-border-radius: 6px;
-padding: 4px 10px;
-font-family: monospace;
+backdrop-filter: blur(8px);
+color: #FFFFFF;
+border-radius: 9999px;
+padding: 8px 20px;
 font-size: 14px;
+
+hover: background rgba(255,255,255,0.18);
+```
+
+### 5.3 Navbar (floating pill — hero)
+```css
+background: #FFFFFF;
+border: 1px solid #E5E7EB;
+border-radius: 9999px;
+padding: 8px 8px;
+max-width: 760px;
+box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+```
+
+### 5.4 Module / Feature Cards (light sections)
+```css
+background: #FFFFFF;
+border: 1px solid #E5E7EB;  /* border-neutral-200 */
+border-radius: 16px;
+padding: 20–24px;
+transition: box-shadow 200ms, transform 200ms;
+
+hover:
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+
+.icon-container {
+  width: 36–40px; height: 36–40px;
+  background: #f5f2ee;
+  border-radius: 12px;
+  icon: 14–18px, color #2563EB;
+}
+```
+
+### 5.5 ProofStrip Glassmorphism Boxes
+```css
+background: rgba(255,255,255,0.06);
+border: 1px solid rgba(255,255,255,0.10);
+backdrop-filter: blur(12px);
+border-radius: 16px;
+padding: 16px 24px;
+
+.icon-tile {
+  background: rgba(37,99,235,0.20);
+  border: 1px solid rgba(37,99,235,0.30);
+  border-radius: 12px;
+  width: 36px; height: 36px;
+}
+```
+
+### 5.6 Comparison Table
+```css
+/* Header */
+background: #0b0f1a;
+color: white;
+font-weight: 600;
+font-size: 14px;
+
+/* Top accent border */
+border-top: 3px solid #2563EB;
+
+/* Alternating rows */
+even: #FFFFFF;
+odd: #f9f8f6;
+
+/* Status icons */
+✓ color: #16A34A;
+✗ color: #EF4444;
+⚠ color: #D97706;
+```
+
+### 5.7 Status Badges
+```css
+/* Available Now — Ask Nova */
+background: #DCFCE7; color: #16A34A;
+dot: 6px, background #16A34A;
+
+/* Coming Soon — Tell Nova (NEVER change to live) */
+background: #FEF3C7; color: #B45309;
+dot: 6px, background #F59E0B;
+
+/* Live indicator */
+background: #DCFCE7; color: #16A34A;
+animated pulse dot;
+```
+
+### 5.8 Section Background Alternation
+Sections alternate between `#ffffff` and `#f5f2ee` for light sections.
+Dark sections (`#0b0f1a` / `#070a12`) break the rhythm intentionally for contrast.
+
+### 5.9 Callout / Highlight Box (light)
+```css
+background: #f5f2ee;
+border-left: 4px solid #2563EB;
+border-radius: 0 16px 16px 0;
+padding: 20px 24px;
+```
+
+---
+
+## 6. Video & Media
+
+### Hero Video
+- `src="/assets/videos/hero-principal-loop.mp4"` — must be in `/public/assets/videos/`
+- Attributes: `autoPlay loop muted playsInline preload="auto"`
+- Overlay: `bg-gradient-to-b from-black/65 via-black/50 to-black/70`
+
+### Section Videos (cinematic sections)
+```
+Typing interaction:   /assets/videos/typing-command.mp4
+Nova Command:         /assets/videos/boomerang-nova-command.mp4
+Nova Lounge:          /assets/videos/nova-lounge-team.mp4  (grayscale opacity-35)
+Demo preview modal:   /assets/videos/product-demo-preview.mp4
+```
+
+### Module Carousel Videos
+```
+Admissions:  /assets/videos/boomerang-admission.mp4
+Fees:        /assets/videos/boomerang-fees.mp4
+Transport:   /assets/videos/boomerang-transport.mp4
+Campus Life: /assets/videos/boomerang-library.mp4
+```
+
+### All videos must:
+- Be placed in `/public/assets/videos/`
+- Use `autoPlay loop muted playsInline`
+- Have `object-cover` to fill containers
+
+---
+
+## 7. Spacing System
+
+Tailwind 4px base. Key tokens:
+
+```
+Section vertical:  py-24 (96px desktop) / py-16 (64px mobile)
+Section horizontal: px-6 (24px) + max-w-7xl mx-auto
+Card padding:       p-5 (20px) or p-6 (24px)
+Card gap:           gap-4 (16px) or gap-5 (20px)
+Grid gap:           gap-3–4
+Between h2 and sub: mb-4 / mt-3
+CTA group gap:      gap-3
 ```
 
 ---
 
 ## 8. Responsive Breakpoints
 
-```css
-/* Tailwind defaults */
-sm: 640px    /* Large mobile / small tablet */
-md: 768px    /* Tablet */
-lg: 1024px   /* Small desktop */
-xl: 1280px   /* Standard desktop */
-2xl: 1536px  /* Wide desktop */
+```
+sm:  640px   Large mobile / small tablet
+md:  768px   Tablet
+lg:  1024px  Small desktop
+xl:  1280px  Standard desktop
+2xl: 1536px  Wide desktop
 ```
 
-| Element | < 768px (Mobile) | ≥ 1024px (Desktop) |
-|---------|------------------|--------------------|
-| Hero | Single column, copy above diagram | Two-column 60/40 split |
-| Module diagram | Simplified 2×4 icon grid | Full hub-and-spoke SVG |
-| Nav | Hamburger drawer | Full horizontal |
-| Comparison table | Card-per-row stacked | Full 3-column table |
-| AppStore grid | 1-column | 3-column |
-| AI section cards | Stacked vertically | Side-by-side |
-| Footer | 2-column or accordion | 4-column |
-| Section padding | py-16 (64px) | py-24 (96px) |
-| Animations | Disabled | Enabled |
-
-**Mobile sticky CTA:**
-```css
-/* Fixed bottom bar on mobile only */
-@media (max-width: 768px) {
-  .sticky-cta {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 12px 16px;
-    background: #FFFFFF;
-    border-top: 1px solid #E5E7EB;
-    box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
-    z-index: 40;
-  }
-  .sticky-cta button {
-    width: 100%;
-  }
-}
-```
+| Element | Mobile | Desktop |
+|---------|--------|---------|
+| Hero h1 | 32px | 68px (clamped) |
+| Module carousel | horizontal scroll | 8 cards visible |
+| AI section | stacked | 5-col grid (2 video + 3 cards) |
+| Comparison table | stacked cards | full 3-col table |
+| AppStore bento | single col | 3-col left + 2-col right panel |
+| ProofStrip boxes | stacked | side-by-side |
+| Footer | 2-col | 4-col |
 
 ---
 
-## 10. Animation System (Added: June 2026)
+## 9. Animation System
 
 ### CSS Keyframes (in `app/globals.css`)
+| Class | Effect | Duration |
+|-------|--------|----------|
+| `fadeInUp` | opacity 0→1, translateY 30px→0 | 0.6s ease-out |
+| `fadeInOverlay` | opacity 0→1 | 0.4s ease-out |
+| `slideUpDialog` | opacity 0→1, translateY 20px→0 | 0.5s ease-out |
 
-| Class | Effect | Duration | Use case |
-|-------|--------|----------|----------|
-| `.animate-fade-in-up` | opacity 0→1, translateY 30px→0 | 0.6s ease-out | Hero elements on load |
-| `.animate-fade-in-overlay` | opacity 0→1 | 0.4s ease-out | Tab overlay wrapper |
-| `.animate-slide-up-overlay` | opacity 0→1, translateY 20px→0 | 0.5s ease-out | Tab overlay card |
+### `AnimateIn` component
+- Uses IntersectionObserver (threshold: 0.15)
+- Fires `fadeInUp` when element enters viewport
+- Accepts `delay` prop (seconds)
+- Never apply `opacity: 0` inline on below-fold elements (breaks no-JS)
 
-### Hero Stagger Pattern
-
-Each hero element has `opacity: 0` inline + `.animate-fade-in-up` class with increasing `animationDelay`:
-
-| Element | Delay |
-|---------|-------|
-| Badge | 0.2s |
-| Headline | 0.3s |
-| Sub-headline | 0.4s |
-| CTAs | 0.5s |
-| Tab bar | 0.6s |
-| Product window | 0.7s |
-| Integration logos | 0.8s |
-
-### Below-fold Sections
-
-Use `<AnimateIn delay={n}>` from `components/ui/AnimateIn.tsx`. Uses IntersectionObserver (threshold: 0.15) — fires `fadeInUp` only when element enters viewport. Never apply `opacity: 0` inline on below-fold elements (hides content if JS fails).
-
-### Hero Design — Updated Spec (replaces original Section 1 hero layout)
-
-| Property | Value |
-|----------|-------|
-| Layout | Centred single column (replaced 60/40 split) |
-| Headline size | 80px desktop / 64px tablet / 52px mobile |
-| Headline weight | 800 ExtraBold (unchanged) |
-| Primary CTA colour | `#111827` near-black (replaces nova-blue `#2563EB`) |
-| Secondary CTA | outline pill, `#111827` border and text |
-| Badge | Star icon + frost bg pill, trust signal copy |
-| Tab bar | 4 tabs (Fee Management, Transport, Attendance, Ask Nova), auto-cycle 4s |
-| Product window | `bg-nova-night`, browser chrome, sidebar, animated overlay cards |
-| Integration strip | Text-based logos below product window |
-
-### Product Window Spec
-
-```
-Height: 480px (desktop)
-Background: bg-[#0d1f3c] + radial dot grid (rgba(255,255,255,0.06), 28×28px)
-Browser chrome: bg-[#1a2a4a], traffic lights (FF5F57 / FFBD2E / 28CA41)
-Sidebar: bg-[#0a1628], 56px wide, N logo + 5 module icon buttons
-Overlay cards: bg-white, rounded-2xl, shadow-2xl, max-w-[320px], centred
-Overlay animation: key prop change → re-mounts → animate-fade-in-overlay + animate-slide-up-overlay
-```
-
-### Integration Strip
-
-Text-based (no image assets required):
-
-| Brand | Style |
-|-------|-------|
-| Razorpay | `font-bold text-[#2563EB] text-base` |
-| Frappe HRMS | `font-semibold text-[#111827] text-sm` |
-| LeadSquared | `font-bold text-[#6B7280] text-xs uppercase tracking-widest` |
-| Meritto | `font-semibold text-[#111827] text-base italic` |
-| Apeejay Stya Group | prefixed with grey "Backed by" label |
+### Video Modal
+- Trigger: "Play Exclusive Preview" button in hero
+- Overlay: `bg-black/90 backdrop-blur-sm fixed inset-0 z-50`
+- Close: Escape key or click outside
+- Body scroll locked while open
 
 ---
 
-## 9. Performance Targets
+## 10. Performance Targets
 
 | Metric | Target |
 |--------|--------|
-| Page load (mobile 4G) | < 3 seconds |
 | LCP | < 2.5s |
 | CLS | < 0.1 |
-| FID / INP | < 100ms |
-| Image format | WebP with lazy loading |
-| Font loading | `font-display: swap` |
-| Animations | Disabled below 768px |
-| Bundle size | < 200KB JS initial load |
+| INP | < 100ms |
+| Hero video | preload="auto", compressed MP4 |
+| Images | WebP, lazy loading |
+| Font loading | `font-display: swap` via next/font |
+| JS bundle | < 200KB initial |
+| Animations | Respect `prefers-reduced-motion` |
