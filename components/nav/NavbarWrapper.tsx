@@ -13,8 +13,10 @@ export default function NavbarWrapper() {
 
   return (
     <>
-      {/* Homepage has its own pill navbar inside the hero — hide the global fixed one */}
-      {!isHomepage && <Navbar onBookDemo={() => setModalOpen(true)} />}
+      <Navbar
+        onBookDemo={() => setModalOpen(true)}
+        transparentOnMount={isHomepage}
+      />
       <MobileStickyCTA onBookDemo={() => setModalOpen(true)} />
       <BookDemoModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>
