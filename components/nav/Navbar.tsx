@@ -38,11 +38,7 @@ export default function Navbar({ onBookDemo, transparentOnMount = false }: Navba
 
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
-            <Wordmark
-              cadenceColor={dark ? "#ffffff" : "#111827"}
-              novaColor={dark ? "#93c5fd" : "#2563EB"}
-              size="md"
-            />
+            <Wordmark color={dark ? "#ffffff" : "#111827"} size="md" />
           </Link>
 
           {/* Desktop nav links */}

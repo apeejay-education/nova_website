@@ -77,8 +77,8 @@ export default function Hero({ onBookDemo }: HeroProps) {
 
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
-              <span className="w-2 h-2 rounded-full bg-[#93c5fd] shrink-0" />
-              <Wordmark cadenceColor="#ffffff" novaColor="#93c5fd" size="sm" />
+              <span className="w-2 h-2 rounded-full bg-white/60 shrink-0" />
+              <Wordmark color="#ffffff" size="sm" />
             </div>
 
             {/* Bare headline */}

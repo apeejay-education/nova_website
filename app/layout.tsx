@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif, DM_Sans, Playfair_Display } from "next/font/google";
+import { Inter, Instrument_Serif, Space_Grotesk, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import NavbarWrapper from "@/components/nav/NavbarWrapper";
 
@@ -18,18 +18,18 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
-const dmSans = DM_Sans({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-dm-sans",
+  variable: "--font-space-grotesk",
   weight: ["400", "500", "600", "700"],
 });
 
-const playfairDisplay = Playfair_Display({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-playfair",
-  weight: ["400", "700"],
+  variable: "--font-cormorant",
+  weight: ["400", "600", "700"],
   style: ["normal", "italic"],
 });
 
@@ -69,7 +69,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${instrumentSerif.variable} ${dmSans.variable} ${playfairDisplay.variable} h-full`}
+      className={`${inter.variable} ${instrumentSerif.variable} ${spaceGrotesk.variable} ${cormorantGaramond.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
