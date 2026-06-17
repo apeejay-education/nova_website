@@ -57,7 +57,7 @@ const CLAIMS = [
     Icon: Sparkles,
     title: "AI Search",
     metric: "Ask Nova · Live",
-    metricColor: "text-[#60a5fa]",
+    metricColor: "text-white",
   },
   {
     Icon: Layers,
