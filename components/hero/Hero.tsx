@@ -46,26 +46,40 @@ function VideoModal({ onClose }: { onClose: () => void }) {
   );
 }
 
-const CLAIMS = [
-  {
-    Icon: Zap,
-    title: "Blazing Fast ERP",
-    metric: "2× faster*",
-    metricColor: "text-white",
-  },
-  {
-    Icon: Sparkles,
-    title: "AI Search",
-    metric: "Ask Nova · Live",
-    metricColor: "text-white",
-  },
-  {
-    Icon: Layers,
-    title: "Every Module You Need",
-    metric: "8 modules, one price",
-    metricColor: "text-white",
-  },
-];
+const glassBox =
+  "bg-white/[0.11] backdrop-blur-md border border-white/[0.22] rounded-2xl";
+const glassBoxShadow =
+  "0 0 28px rgba(37, 99, 235, 0.22), inset 0 1px 0 rgba(255,255,255,0.14)";
+const iconGlow =
+  "0 0 16px rgba(37, 99, 235, 0.55)";
+
+function SideClaimBox({
+  Icon,
+  title,
+  metric,
+}: {
+  Icon: React.ElementType;
+  title: string;
+  metric: string;
+}) {
+  return (
+    <div
+      className={`${glassBox} flex flex-col items-center justify-center gap-3 px-5 py-6 text-center h-full`}
+      style={{ boxShadow: glassBoxShadow }}
+    >
+      <div
+        className="w-11 h-11 rounded-xl bg-[#2563EB]/35 border border-[#2563EB]/60 flex items-center justify-center shrink-0"
+        style={{ boxShadow: iconGlow }}
+      >
+        <Icon size={19} className="text-[#60a5fa]" strokeWidth={2} />
+      </div>
+      <div>
+        <p className="text-white/60 text-[12px] font-medium leading-tight mb-1">{title}</p>
+        <p className="text-white text-[17px] font-bold leading-none tracking-tight">{metric}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function Hero({ onBookDemo }: HeroProps) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -95,17 +109,53 @@ export default function Hero({ onBookDemo }: HeroProps) {
 
             <HeroNavbar onBookDemo={onBookDemo} />
 
-            {/* Hero content — flex-1 centers it between navbar and claim strip */}
+            {/* Hero content */}
             <div className="flex-1 flex flex-col items-center justify-center px-4 pt-2 pb-4 text-center">
 
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#2563EB] shrink-0" />
-                <span className="text-[13px] font-medium text-white">Cadence Nova</span>
+              {/* Badge — larger */}
+              <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#2563EB] shrink-0" />
+                <span className="text-[15px] font-semibold text-white tracking-wide">Cadence Nova</span>
               </div>
 
-              {/* Headline — glassmorphism card */}
-              <div className="mt-4 w-full max-w-3xl backdrop-blur-md bg-white/[0.07] border border-white/[0.12] rounded-2xl px-6 sm:px-10 py-4 sm:py-5">
+              {/* ── Desktop: 3-col layout [claim | headline | claim] ── */}
+              <div
+                className="mt-4 w-full max-w-5xl hidden lg:grid items-stretch gap-4"
+                style={{ gridTemplateColumns: "1fr 2.4fr 1fr" }}
+              >
+                <SideClaimBox Icon={Zap} title="Blazing Fast ERP" metric="2× faster*" />
+
+                {/* Headline card */}
+                <div className="backdrop-blur-md bg-white/[0.07] border border-white/[0.12] rounded-2xl px-8 py-6">
+                  <h1
+                    className="text-white"
+                    style={{
+                      fontSize: "clamp(28px, 4.8vw, 56px)",
+                      lineHeight: 1.06,
+                      fontWeight: 500,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    Complete school{" "}
+                    <span
+                      style={{
+                        fontFamily: "var(--font-instrument-serif), 'Georgia', serif",
+                        fontStyle: "italic",
+                        fontWeight: 400,
+                      }}
+                    >
+                      intelligence.
+                    </span>
+                    <br />
+                    One platform.
+                  </h1>
+                </div>
+
+                <SideClaimBox Icon={Sparkles} title="AI Search" metric="Ask Nova · Live" />
+              </div>
+
+              {/* ── Mobile: headline only ── */}
+              <div className="mt-4 w-full max-w-3xl lg:hidden backdrop-blur-md bg-white/[0.07] border border-white/[0.12] rounded-2xl px-6 py-4 sm:py-5">
                 <h1
                   className="text-white"
                   style={{
@@ -130,8 +180,31 @@ export default function Hero({ onBookDemo }: HeroProps) {
                 </h1>
               </div>
 
-              {/* Subtitle — branded Nova Blue translucent box */}
-              <div className="mt-3 max-w-xl w-full backdrop-blur-sm bg-[#2563EB]/[0.18] border border-[#2563EB]/[0.32] rounded-xl px-5 py-2.5">
+              {/* ── Mobile: two side claims in a row ── */}
+              <div className="mt-3 w-full max-w-sm grid grid-cols-2 gap-3 lg:hidden">
+                <SideClaimBox Icon={Zap} title="Blazing Fast ERP" metric="2× faster*" />
+                <SideClaimBox Icon={Sparkles} title="AI Search" metric="Ask Nova · Live" />
+              </div>
+
+              {/* Every Module — centered strip below headline */}
+              <div
+                className={`${glassBox} mt-3 flex items-center gap-3.5 px-6 py-4 max-w-xs lg:max-w-sm w-full`}
+                style={{ boxShadow: glassBoxShadow }}
+              >
+                <div
+                  className="w-10 h-10 rounded-xl bg-[#2563EB]/35 border border-[#2563EB]/60 flex items-center justify-center shrink-0"
+                  style={{ boxShadow: iconGlow }}
+                >
+                  <Layers size={17} className="text-[#60a5fa]" strokeWidth={2} />
+                </div>
+                <div className="text-left">
+                  <p className="text-white/60 text-[12px] font-medium leading-none mb-1">Every Module You Need</p>
+                  <p className="text-white text-[17px] font-bold leading-none tracking-tight">8 modules, one price</p>
+                </div>
+              </div>
+
+              {/* Subtitle — extra gap for breathing room */}
+              <div className="mt-8 max-w-xl w-full backdrop-blur-sm bg-[#2563EB]/[0.18] border border-[#2563EB]/[0.32] rounded-xl px-5 py-2.5">
                 <p
                   className="text-white/85"
                   style={{ fontSize: "clamp(13px, 3.2vw, 15px)" }}
@@ -164,37 +237,13 @@ export default function Hero({ onBookDemo }: HeroProps) {
                   Play Exclusive Preview
                 </button>
               </div>
-            </div>
 
-            {/* Claim strip — anchored to hero bottom */}
-            <div className="px-4 sm:px-6 pb-5 sm:pb-7">
-              <div className="flex flex-col sm:flex-row gap-3 max-w-4xl mx-auto">
-                {CLAIMS.map(({ Icon, title, metric, metricColor }) => (
-                  <div
-                    key={title}
-                    className="flex-1 flex items-center gap-4 bg-white/[0.11] backdrop-blur-md border border-white/[0.22] rounded-2xl px-6 py-5"
-                    style={{
-                      boxShadow: "0 0 28px rgba(37, 99, 235, 0.22), inset 0 1px 0 rgba(255,255,255,0.14)",
-                    }}
-                  >
-                    <div
-                      className="w-12 h-12 rounded-xl bg-[#2563EB]/35 border border-[#2563EB]/60 flex items-center justify-center shrink-0"
-                      style={{ boxShadow: "0 0 16px rgba(37, 99, 235, 0.55)" }}
-                    >
-                      <Icon size={20} className="text-[#60a5fa]" strokeWidth={2} />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-white/65 text-[13px] font-medium leading-none mb-1.5 truncate">{title}</p>
-                      <p className={`text-[18px] font-bold leading-none tracking-tight ${metricColor}`}>{metric}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-center text-white/30 mt-2.5" style={{ fontSize: 10 }}>
+              {/* Footnote */}
+              <p className="mt-3 text-white/25" style={{ fontSize: 10 }}>
                 * As compared to few traditional ERPs
               </p>
-            </div>
 
+            </div>
           </div>
         </div>
       </div>
