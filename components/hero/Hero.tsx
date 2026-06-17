@@ -7,18 +7,6 @@ interface HeroProps {
   onBookDemo: () => void;
 }
 
-const FEATURE_PILLS = [
-  "AI Search",
-  "Keyboard Shortcuts",
-  "Fee Management",
-  "LMS",
-  "SIS",
-  "Comms",
-  "Mobile App",
-  "Transport",
-  "Attendance",
-  "AppStore",
-];
 
 function VideoModal({ onClose }: { onClose: () => void }) {
   useEffect(() => {
@@ -117,27 +105,20 @@ export default function Hero({ onBookDemo }: HeroProps) {
               One platform.
             </h1>
 
-            {/* Subtitle — simple white pill (Vivido-style) */}
-            <div className="mt-5 bg-white/10 backdrop-blur-sm border border-white/[0.18] rounded-full px-6 py-2.5">
-              <p className="text-white/90 text-[14px] font-medium tracking-wide">
+            {/* Subtitle — opaque white rounded box, dark text (Vivido-style) */}
+            <div className="mt-5 bg-white/90 backdrop-blur-sm rounded-2xl px-7 py-3 shadow-sm">
+              <p className="text-[#111827] text-[15px] font-medium">
                 AI-powered. Blazing fast. School ERP, redefined.
               </p>
             </div>
 
-            {/* Feature pills */}
-            <div className="mt-6 flex flex-wrap justify-center gap-2 max-w-2xl">
-              {FEATURE_PILLS.map((pill) => (
-                <span
-                  key={pill}
-                  className="bg-white/[0.08] border border-white/[0.16] text-white/75 rounded-full px-3.5 py-1.5 text-[13px] font-medium backdrop-blur-sm"
-                >
-                  {pill}
-                </span>
-              ))}
-            </div>
+            {/* Stat line — plain muted text, no pills */}
+            <p className="mt-5 text-white/45 text-[13px] tracking-wide">
+              8 Modules&nbsp;&nbsp;·&nbsp;&nbsp;AI Queries&nbsp;&nbsp;·&nbsp;&nbsp;Hotkey Enabled
+            </p>
 
             {/* CTAs */}
-            <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
+            <div className="mt-8 flex flex-col sm:flex-row items-center gap-5">
               <button
                 onClick={onBookDemo}
                 className="inline-flex items-center gap-3 bg-white text-[#0b0f1a] rounded-full pl-6 pr-2 py-2.5 hover:bg-white/90 transition-colors"
@@ -149,15 +130,23 @@ export default function Hero({ onBookDemo }: HeroProps) {
                 </span>
               </button>
 
+              {/* Gradient glow play button */}
               <button
                 onClick={() => setVideoModalOpen(true)}
-                className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-full px-5 py-2.5 hover:bg-white/[0.18] transition-colors"
-                style={{ fontSize: 14 }}
+                className="inline-flex items-center gap-3 group"
               >
-                <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-                  <Play size={9} fill="white" strokeWidth={0} />
+                <span
+                  className="w-12 h-12 rounded-full flex items-center justify-center transition-transform group-hover:scale-105"
+                  style={{
+                    background: "linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)",
+                    boxShadow: "0 0 20px rgba(124,58,237,0.55), 0 0 40px rgba(37,99,235,0.25)",
+                  }}
+                >
+                  <Play size={16} fill="white" strokeWidth={0} className="ml-0.5" />
                 </span>
-                Play Exclusive Preview
+                <span className="text-white/75 text-[14px] group-hover:text-white transition-colors">
+                  Play Exclusive Preview
+                </span>
               </button>
             </div>
           </div>
