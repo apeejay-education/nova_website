@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Inter, Instrument_Serif, DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import NavbarWrapper from "@/components/nav/NavbarWrapper";
 
@@ -15,6 +15,21 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
   variable: "--font-instrument-serif",
   weight: ["400"],
+  style: ["normal", "italic"],
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-playfair",
+  weight: ["400", "700"],
   style: ["normal", "italic"],
 });
 
@@ -54,7 +69,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${instrumentSerif.variable} h-full`}
+      className={`${inter.variable} ${instrumentSerif.variable} ${dmSans.variable} ${playfairDisplay.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>

@@ -5,19 +5,11 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { NAV_ITEMS } from "@/lib/constants";
 import MobileDrawer from "./MobileDrawer";
+import Wordmark from "@/components/ui/Wordmark";
 
 interface NavbarProps {
   onBookDemo: () => void;
   transparentOnMount?: boolean;
-}
-
-function NovaMark() {
-  return (
-    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
-      <rect width="32" height="32" rx="8" fill="#1E3A8A" />
-      <path d="M9 23V9l14 14V9" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
 }
 
 export default function Navbar({ onBookDemo, transparentOnMount = false }: NavbarProps) {
@@ -45,15 +37,8 @@ export default function Navbar({ onBookDemo, transparentOnMount = false }: Navba
         <div className="max-w-7xl mx-auto h-full px-6 flex items-center">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <NovaMark />
-            <span
-              className={`hidden sm:block text-sm font-semibold tracking-tight transition-colors duration-300 ${
-                dark ? "text-white" : "text-[#111827]"
-              }`}
-            >
-              Cadence<span className="font-bold">Nova</span>
-            </span>
+          <Link href="/" className="flex items-center shrink-0">
+            <Wordmark cadenceColor={dark ? "#ffffff" : "#111827"} size="md" />
           </Link>
 
           {/* Desktop nav links */}

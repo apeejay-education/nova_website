@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ChevronRight, ChevronDown, Play, X, Sparkles } from "lucide-react";
+import Wordmark from "@/components/ui/Wordmark";
 
 interface HeroProps {
   onBookDemo: () => void;
@@ -76,9 +77,9 @@ export default function Hero({ onBookDemo }: HeroProps) {
           <div className="flex-1 flex flex-col items-center justify-center px-6 pt-16 pb-4 text-center">
 
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
               <span className="w-2 h-2 rounded-full bg-[#2563EB] shrink-0" />
-              <span className="text-[13px] font-medium text-white">Cadence Nova</span>
+              <Wordmark cadenceColor="#ffffff" size="sm" />
             </div>
 
             {/* Bare headline — directly on video */}
