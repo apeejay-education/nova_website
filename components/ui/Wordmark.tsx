@@ -1,6 +1,6 @@
 interface WordmarkProps {
-  /** "cadence" text color — white on dark, #111827 on light */
   cadenceColor?: string;
+  novaColor?: string;
   size?: "sm" | "md" | "lg";
 }
 
@@ -10,7 +10,7 @@ const sizes = {
   lg: { cadence: 22, nova: 24 },
 };
 
-export default function Wordmark({ cadenceColor = "#111827", size = "md" }: WordmarkProps) {
+export default function Wordmark({ cadenceColor = "#111827", novaColor = "#2563EB", size = "md" }: WordmarkProps) {
   const s = sizes[size];
   return (
     <span className="inline-flex items-baseline gap-1.5">
@@ -32,7 +32,7 @@ export default function Wordmark({ cadenceColor = "#111827", size = "md" }: Word
           fontStyle: "italic",
           fontWeight: 400,
           fontSize: s.nova,
-          color: "#2563EB",
+          color: novaColor,
           letterSpacing: "0.01em",
           lineHeight: 1,
         }}
