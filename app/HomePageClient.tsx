@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Hero from "@/components/hero/Hero";
-import DashboardPreview from "@/components/hero/DashboardPreview";
 import ProofStrip from "@/components/sections/ProofStrip";
 import PlatformSection from "@/components/sections/PlatformSection";
 import AISection from "@/components/sections/AISection";
@@ -21,7 +20,6 @@ export default function HomePageClient() {
   return (
     <>
       <Hero onBookDemo={openModal} />
-      <DashboardPreview />
       <ProofStrip />
       <PlatformSection />
       <AISection />

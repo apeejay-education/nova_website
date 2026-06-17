@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronRight, Play, X } from "lucide-react";
+import { ChevronRight, Play, X, Zap, Sparkles, Layers } from "lucide-react";
 import HeroNavbar from "./HeroNavbar";
 
 interface HeroProps {
@@ -46,6 +46,27 @@ function VideoModal({ onClose }: { onClose: () => void }) {
   );
 }
 
+const CLAIMS = [
+  {
+    Icon: Zap,
+    title: "Blazing Fast ERP",
+    metric: "2× faster*",
+    metricColor: "text-white",
+  },
+  {
+    Icon: Sparkles,
+    title: "AI Search",
+    metric: "Ask Nova · Live",
+    metricColor: "text-[#2563EB]",
+  },
+  {
+    Icon: Layers,
+    title: "Every Module You Need",
+    metric: "8 modules, one price",
+    metricColor: "text-white",
+  },
+];
+
 export default function Hero({ onBookDemo }: HeroProps) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
@@ -66,16 +87,16 @@ export default function Hero({ onBookDemo }: HeroProps) {
             <source src="/assets/videos/hero-principal-loop.mp4" type="video/mp4" />
           </video>
 
-          {/* Cinematic gradient overlay — heavier mid-section to protect typography */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/70" />
+          {/* Cinematic gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/75" />
 
           {/* Foreground */}
           <div className="relative z-10 flex flex-col h-full">
 
             <HeroNavbar onBookDemo={onBookDemo} />
 
-            {/* Hero content */}
-            <div className="flex flex-col items-center px-4 pt-6 sm:pt-8 pb-3 sm:pb-4 text-center">
+            {/* Hero content — flex-1 centers it between navbar and claim strip */}
+            <div className="flex-1 flex flex-col items-center justify-center px-4 pt-2 pb-4 text-center">
 
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5">
@@ -143,6 +164,29 @@ export default function Hero({ onBookDemo }: HeroProps) {
                   Play Exclusive Preview
                 </button>
               </div>
+            </div>
+
+            {/* Claim strip — anchored to hero bottom */}
+            <div className="px-4 sm:px-6 pb-4 sm:pb-5">
+              <div className="flex flex-col sm:flex-row gap-2 max-w-3xl mx-auto">
+                {CLAIMS.map(({ Icon, title, metric, metricColor }) => (
+                  <div
+                    key={title}
+                    className="flex-1 flex items-center gap-3 bg-white/[0.08] backdrop-blur-md border border-white/[0.13] rounded-2xl px-4 py-3"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-[#2563EB]/20 border border-[#2563EB]/30 flex items-center justify-center shrink-0">
+                      <Icon size={14} className="text-[#2563EB]" strokeWidth={2} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-white/60 text-[11px] font-medium leading-none mb-0.5 truncate">{title}</p>
+                      <p className={`text-[13px] font-semibold leading-none ${metricColor}`}>{metric}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-center text-white/25 mt-2" style={{ fontSize: 10 }}>
+                * As compared to few traditional ERPs
+              </p>
             </div>
 
           </div>
