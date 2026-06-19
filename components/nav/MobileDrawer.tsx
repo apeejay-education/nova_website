@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { NAV_ITEMS } from "@/lib/constants";
 import Button from "@/components/ui/Button";
+import NovaLogo from "@/components/ui/NovaLogo";
 
 interface MobileDrawerProps {
   open: boolean;
@@ -55,7 +56,7 @@ export default function MobileDrawer({ open, onClose, onBookDemo }: MobileDrawer
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between px-6 h-16 border-b border-divider">
-          <span className="text-nova-indigo font-bold text-lg">Menu</span>
+          <NovaLogo dark={false} />
           <button
             onClick={onClose}
             className="p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-nova-frost transition-colors"

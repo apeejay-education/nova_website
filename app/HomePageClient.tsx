@@ -9,6 +9,7 @@ import AppStoreSection from "@/components/sections/AppStoreSection";
 import CadenceCareSection from "@/components/sections/CadenceCareSection";
 import MidCTASection from "@/components/sections/MidCTASection";
 import ComparisonSection from "@/components/sections/ComparisonSection";
+import IntegrationsSection from "@/components/sections/IntegrationsSection";
 import Footer from "@/components/sections/Footer";
 import BookDemoModal from "@/components/forms/BookDemoModal";
 
@@ -26,6 +27,7 @@ export default function HomePageClient() {
       <CadenceCareSection />
       <MidCTASection onBookDemo={openModal} />
       <ComparisonSection />
+      <IntegrationsSection />
       <Footer onBookDemo={openModal} />
       <BookDemoModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>

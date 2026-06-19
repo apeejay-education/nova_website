@@ -3,6 +3,7 @@
 import { ChevronRight } from "lucide-react";
 import { MID_CTA_SECTION } from "@/lib/constants";
 import AnimateIn from "@/components/ui/AnimateIn";
+import JourneyBackground from "@/components/ui/JourneyBackground";
 
 interface MidCTASectionProps {
   onBookDemo: () => void;
@@ -10,7 +11,17 @@ interface MidCTASectionProps {
 
 export default function MidCTASection({ onBookDemo }: MidCTASectionProps) {
   return (
-    <section className="bg-[#f5f2ee] py-24 px-6">
+    <section className="bg-[#f5f2ee] py-24 px-6 relative overflow-hidden">
+      <JourneyBackground tone="light" nodes={[
+        { icon: "CalendarCheck", x: 8,  y: 42, delay: 0   },
+        { icon: "Bell",          x: 34, y: 74, delay: 200 },
+        { icon: "CheckCircle2",  x: 64, y: 20, delay: 400 },
+        { icon: "ArrowRight",    x: 90, y: 58, delay: 600 },
+      ]} paths={[
+        "M 8,42 C 18,58 26,68 34,74",
+        "M 34,74 C 46,52 56,32 64,20",
+        "M 64,20 C 74,36 83,50 90,58",
+      ]} />
       <div className="max-w-3xl mx-auto text-center">
         <AnimateIn>
           <h2

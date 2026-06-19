@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronRight, ChevronDown, Play, X, Sparkles } from "lucide-react";
+import { ChevronRight, ChevronDown, Play, X } from "lucide-react";
 import Wordmark from "@/components/ui/Wordmark";
+import SeamlessVideo from "@/components/ui/SeamlessVideo";
 
 interface HeroProps {
   onBookDemo: () => void;
@@ -48,26 +49,16 @@ function VideoModal({ onClose }: { onClose: () => void }) {
 
 export default function Hero({ onBookDemo }: HeroProps) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
-  const [askNovaVisible, setAskNovaVisible] = useState(true);
 
   return (
     <>
       <div className="relative w-full h-screen overflow-hidden bg-[#0b0f1a]">
 
         {/* Background video */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-        >
-          <source src="/assets/videos/hero-principal-loop.mp4" type="video/mp4" />
-        </video>
+        <SeamlessVideo src="/assets/videos/hero-principal-loop.mp4" />
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/75" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/88" />
 
         {/* Content */}
         <div className="relative z-10 h-full flex flex-col">
@@ -78,12 +69,22 @@ export default function Hero({ onBookDemo }: HeroProps) {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
               <span className="w-2 h-2 rounded-full bg-white/60 shrink-0" />
-              <Wordmark color="#ffffff" size="sm" />
+              <span
+                style={{
+                  fontWeight: 500,
+                  fontSize: 14,
+                  letterSpacing: "-0.02em",
+                  color: "#ffffff",
+                  lineHeight: 1,
+                }}
+              >
+                Cadence Nova
+              </span>
             </div>
 
             {/* Bare headline */}
             <h1
-              className="mt-6 text-white max-w-4xl"
+              className="mt-10 text-white max-w-4xl"
               style={{
                 fontSize: "clamp(38px, 6.5vw, 76px)",
                 lineHeight: 1.04,
@@ -105,22 +106,15 @@ export default function Hero({ onBookDemo }: HeroProps) {
               One platform.
             </h1>
 
-            {/* Subtitle — opaque white pill, dark text (Vivido-style) */}
-            <div className="mt-5 bg-white/90 backdrop-blur-sm rounded-2xl px-7 py-3 shadow-sm">
-              <p className="text-[#111827] text-[15px] font-medium">
-                AI-powered. Blazing fast. School ERP, redefined.
-              </p>
-            </div>
-
             {/* Stat line — glassmorphism pill */}
-            <div className="mt-4 bg-white/[0.08] backdrop-blur-sm border border-white/[0.15] rounded-full px-6 py-2">
-              <p className="text-white/75 text-[13px] tracking-wide">
+            <div className="mt-10 bg-white/[0.08] backdrop-blur-sm border border-white/[0.15] rounded-full px-6 py-2.5">
+              <p className="text-white/70 text-[13px] tracking-widest uppercase">
                 8 Modules&nbsp;&nbsp;·&nbsp;&nbsp;AI Queries&nbsp;&nbsp;·&nbsp;&nbsp;Hotkey Enabled
               </p>
             </div>
 
             {/* CTAs */}
-            <div className="mt-8 flex items-center gap-6">
+            <div className="mt-12 flex items-center gap-6">
               <button
                 onClick={onBookDemo}
                 className="inline-flex items-center gap-3 bg-white text-[#0b0f1a] rounded-full pl-6 pr-2 py-2.5 hover:bg-white/90 transition-colors"
@@ -169,39 +163,10 @@ export default function Hero({ onBookDemo }: HeroProps) {
             </div>
           </div>
 
-          {/* Bottom row */}
-          <div className="relative flex items-end px-6 sm:px-10 pb-8">
-
-            {/* Ask Nova™ — glassmorphism card with close button */}
-            {askNovaVisible && (
-              <div className="hidden sm:block bg-white/[0.12] backdrop-blur-md border border-white/[0.20] rounded-2xl p-4 max-w-[268px]">
-                <div className="flex items-center gap-2 mb-2">
-                  <Sparkles size={13} className="text-[#93c5fd]" strokeWidth={2} />
-                  <span className="text-[13px] font-semibold text-white">Ask Nova™</span>
-                  <span className="ml-auto inline-flex items-center gap-1 bg-green-500/20 text-green-400 rounded-full px-2 py-0.5 text-[10px] font-semibold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                    Live
-                  </span>
-                  <button
-                    onClick={() => setAskNovaVisible(false)}
-                    className="ml-1.5 text-white/35 hover:text-white/70 transition-colors"
-                    aria-label="Dismiss"
-                  >
-                    <X size={13} />
-                  </button>
-                </div>
-                <p className="text-[12px] text-white/55 leading-relaxed">
-                  Natural language queries across your entire school. Zero training needed.
-                </p>
-              </div>
-            )}
-
-            {/* SCROLL indicator */}
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-6 flex flex-col items-center gap-1.5 text-white/35">
-              <span className="text-[10px] tracking-[0.15em] font-medium uppercase">Scroll</span>
-              <ChevronDown size={14} strokeWidth={2} />
-            </div>
-
+          {/* Scroll indicator */}
+          <div className="flex flex-col items-center gap-1.5 pb-8 text-white/35">
+            <span className="text-[10px] tracking-[0.15em] font-medium uppercase">Scroll</span>
+            <ChevronDown size={14} strokeWidth={2} />
           </div>
         </div>
       </div>

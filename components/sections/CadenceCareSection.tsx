@@ -1,22 +1,33 @@
 import Link from "next/link";
 import AnimateIn from "@/components/ui/AnimateIn";
+import JourneyBackground from "@/components/ui/JourneyBackground";
+import SeamlessVideo from "@/components/ui/SeamlessVideo";
 
 export default function CadenceCareSection() {
   return (
     <section className="relative overflow-hidden min-h-[70vh] flex items-center justify-center bg-[#0b0f1a]">
 
       {/* Full-bleed background video — desaturated/cinematic */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-35 grayscale"
+      <SeamlessVideo
         src="/assets/videos/nova-lounge-team.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
+        className="opacity-35 grayscale"
       />
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0b0f1a]/60 via-[#0b0f1a]/30 to-[#0b0f1a]/80" />
+
+      <JourneyBackground tone="dark" nodes={[
+        { icon: "Building2",    x: 6,  y: 22, delay: 0   },
+        { icon: "Users",        x: 26, y: 72, delay: 200 },
+        { icon: "GraduationCap",x: 52, y: 18, delay: 400 },
+        { icon: "ShieldCheck",  x: 76, y: 68, delay: 600 },
+        { icon: "CheckCircle2", x: 93, y: 30, delay: 800 },
+      ]} paths={[
+        "M 6,22 C 14,44 20,60 26,72",
+        "M 26,72 C 36,50 44,30 52,18",
+        "M 52,18 C 62,38 70,56 76,68",
+        "M 76,68 C 83,52 89,38 93,30",
+      ]} />
 
       {/* Content */}
       <AnimateIn className="relative z-10 max-w-4xl mx-auto px-6 py-24 text-center">

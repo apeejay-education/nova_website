@@ -117,7 +117,7 @@ export const MODULE_CARDS = [
 
 export const AI_SECTION = {
   headline: "Meet Nova's intelligence.",
-  sub: "Two AI features that change how your school operates.",
+  sub: "Ask anything. Nova answers from across your entire school — instantly.",
   askNova: {
     badge: "AVAILABLE NOW",
     badgeStatus: "live" as const,
@@ -250,50 +250,29 @@ export const COMPARISON_ROWS: {
   traditionalStatus: ComparisonStatus;
 }[] = [
   {
-    feature: "Transport management",
-    nova: "Included in core",
+    feature: "All 8 modules included",
+    nova: "SIS, Fees, Transport, Hostel, LMS & more",
     novaStatus: "check",
-    traditional: "Extra cost or unavailable",
-    traditionalStatus: "cross",
-  },
-  {
-    feature: "Hostel management",
-    nova: "Included in core",
-    novaStatus: "check",
-    traditional: "Extra cost or unavailable",
-    traditionalStatus: "cross",
-  },
-  {
-    feature: "LMS / Learning",
-    nova: "Included in core",
-    novaStatus: "check",
-    traditional: "Separate system required",
-    traditionalStatus: "cross",
-  },
-  {
-    feature: "Library management",
-    nova: "Included in core",
-    novaStatus: "check",
-    traditional: "Extra cost or unavailable",
+    traditional: "Add-ons or separate systems",
     traditionalStatus: "cross",
   },
   {
     feature: "AI-powered queries",
-    nova: "Ask Nova",
+    nova: "Ask Nova — talk to your school data",
     novaStatus: "check",
     traditional: "Not available",
     traditionalStatus: "cross",
   },
   {
-    feature: "Conversational AI assistant",
+    feature: "Conversational AI",
     nova: "Tell Nova (coming soon)",
     novaStatus: "check",
     traditional: "Not available",
     traditionalStatus: "cross",
   },
   {
-    feature: "Keyboard command palette",
-    nova: "Nova Command ⌘K",
+    feature: "Hotkey-based ERP",
+    nova: "Nova Command ⌘K — shortcuts that save hours",
     novaStatus: "check",
     traditional: "Not available",
     traditionalStatus: "cross",
@@ -306,13 +285,6 @@ export const COMPARISON_ROWS: {
     traditionalStatus: "cross",
   },
   {
-    feature: "Mobile app",
-    nova: "Parents + Staff both",
-    novaStatus: "check",
-    traditional: "Limited or none",
-    traditionalStatus: "warning",
-  },
-  {
     feature: "Setup fee",
     nova: "Zero",
     novaStatus: "check",
@@ -320,24 +292,10 @@ export const COMPARISON_ROWS: {
     traditionalStatus: "cross",
   },
   {
-    feature: "Data migration",
-    nova: "Included",
+    feature: "Mobile app",
+    nova: "Parents + Staff both",
     novaStatus: "check",
-    traditional: "Chargeable extra",
-    traditionalStatus: "cross",
-  },
-  {
-    feature: "Real-time fee dashboard",
-    nova: "Live, always on",
-    novaStatus: "check",
-    traditional: "Manual reports only",
-    traditionalStatus: "warning",
-  },
-  {
-    feature: "Integrations",
-    nova: "Razorpay, Frappe HRMS, LeadSquared, Meritto",
-    novaStatus: "check",
-    traditional: "Limited / custom dev required",
+    traditional: "Limited or none",
     traditionalStatus: "warning",
   },
 ];

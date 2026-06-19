@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { NAV_ITEMS } from "@/lib/constants";
 import MobileDrawer from "./MobileDrawer";
-import Wordmark from "@/components/ui/Wordmark";
+import NovaLogo from "@/components/ui/NovaLogo";
 
 interface NavbarProps {
   onBookDemo: () => void;
@@ -38,7 +38,7 @@ export default function Navbar({ onBookDemo, transparentOnMount = false }: Navba
 
           {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
-            <Wordmark color={dark ? "#ffffff" : "#111827"} size="md" />
+            <NovaLogo dark={dark} />
           </Link>
 
           {/* Desktop nav links */}
