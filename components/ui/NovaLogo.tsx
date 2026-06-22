@@ -8,12 +8,12 @@ export default function NovaLogo({ dark = false }: NovaLogoProps) {
   const novaColor    = dark ? "#ffffff"                 : "#0f172a";
 
   return (
-    <div className="flex items-center h-10 shrink-0">
+    <div className="flex items-center h-12 shrink-0">
 
       {/* ── Emblem: arc + N, full gradient — mirrors CI parent mark ── */}
       <svg
-        width="32"
-        height="32"
+        width="38"
+        height="38"
         viewBox="0 0 36 36"
         fill="none"
         aria-hidden="true"
@@ -81,7 +81,7 @@ export default function NovaLogo({ dark = false }: NovaLogoProps) {
           style={{
             fontFamily:    "var(--font-space-grotesk), 'Inter', sans-serif",
             fontWeight:    500,
-            fontSize:      10,
+            fontSize:      11,
             letterSpacing: "0.15em",
             color:         cadenceColor,
             textTransform: "uppercase" as const,
@@ -96,7 +96,7 @@ export default function NovaLogo({ dark = false }: NovaLogoProps) {
           style={{
             fontFamily:    "var(--font-space-grotesk), 'Inter', sans-serif",
             fontWeight:    700,
-            fontSize:      15,
+            fontSize:      17,
             letterSpacing: "0.20em",
             color:         novaColor,
             textTransform: "uppercase" as const,

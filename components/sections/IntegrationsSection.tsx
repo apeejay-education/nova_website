@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   CreditCard, Users, MessageSquare, Briefcase,
   Monitor, BarChart3, Fingerprint, type LucideIcon,
 } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
-import JourneyBackground from "@/components/ui/JourneyBackground";
 
 const TOKEN = process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN ?? "";
 
@@ -97,6 +97,123 @@ const CATEGORIES: Category[] = [
 
 const TOTAL = CATEGORIES.reduce((n, c) => n + c.integrations.length, 0);
 
+// ─── Radar background ─────────────────────────────────────────────────────────
+
+const CX = 720, CY = 380;
+
+// Integer coordinates — avoids any floating-point divergence between Node and browser
+const RADIAL_LINES = [
+  { x2: 1620, y2:  380, stroke: "rgba(37,99,235,0.022)"  }, //   0°
+  { x2: 1499, y2:  830, stroke: "rgba(124,58,237,0.018)" }, //  30°
+  { x2: 1170, y2: 1159, stroke: "rgba(37,99,235,0.022)"  }, //  60°
+  { x2:  720, y2: 1280, stroke: "rgba(124,58,237,0.018)" }, //  90°
+  { x2:  270, y2: 1159, stroke: "rgba(37,99,235,0.022)"  }, // 120°
+  { x2:  -59, y2:  830, stroke: "rgba(124,58,237,0.018)" }, // 150°
+  { x2: -180, y2:  380, stroke: "rgba(37,99,235,0.022)"  }, // 180°
+  { x2:  -59, y2:  -70, stroke: "rgba(124,58,237,0.018)" }, // 210°
+  { x2:  270, y2: -399, stroke: "rgba(37,99,235,0.022)"  }, // 240°
+  { x2:  720, y2: -520, stroke: "rgba(124,58,237,0.018)" }, // 270°
+  { x2: 1170, y2: -399, stroke: "rgba(37,99,235,0.022)"  }, // 300°
+  { x2: 1499, y2:  -70, stroke: "rgba(124,58,237,0.018)" }, // 330°
+];
+
+const INTERSECTION_NODES = [
+  // 0° (right)
+  { cx: 920, cy: 380, fill: "rgba(37,99,235,0.10)",  key: "0-0" },
+  { cx: 1060, cy: 380, fill: "rgba(124,58,237,0.08)", key: "0-1" },
+  { cx: 1200, cy: 380, fill: "rgba(37,99,235,0.10)",  key: "0-2" },
+  // 90° (bottom)
+  { cx: 720, cy: 580, fill: "rgba(124,58,237,0.08)", key: "1-0" },
+  { cx: 720, cy: 720, fill: "rgba(37,99,235,0.10)",  key: "1-1" },
+  { cx: 720, cy: 860, fill: "rgba(124,58,237,0.08)", key: "1-2" },
+  // 180° (left)
+  { cx: 520, cy: 380, fill: "rgba(37,99,235,0.10)",  key: "2-0" },
+  { cx: 380, cy: 380, fill: "rgba(124,58,237,0.08)", key: "2-1" },
+  { cx: 240, cy: 380, fill: "rgba(37,99,235,0.10)",  key: "2-2" },
+  // 270° (top)
+  { cx: 720, cy: 180, fill: "rgba(124,58,237,0.08)", key: "3-0" },
+  { cx: 720, cy:  40, fill: "rgba(37,99,235,0.10)",  key: "3-1" },
+  { cx: 720, cy: -100, fill: "rgba(124,58,237,0.08)", key: "3-2" },
+];
+
+const PULSE_RINGS = [
+  { delay: 0,    color: "rgba(37,99,235,0.22)"  },
+  { delay: 1.12, color: "rgba(124,58,237,0.18)" },
+  { delay: 2.24, color: "rgba(37,99,235,0.16)"  },
+  { delay: 3.36, color: "rgba(124,58,237,0.14)" },
+];
+
+function RadarBackground() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+
+      {/* Central radial glow */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{
+          width: 640, height: 640,
+          background:
+            "radial-gradient(ellipse at center, rgba(37,99,235,0.025) 0%, rgba(124,58,237,0.012) 45%, transparent 70%)",
+          borderRadius: "50%",
+        }}
+      />
+
+      {/* Central content shield — white vignette that keeps text zone clean */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        style={{
+          width: 900, height: 900,
+          background:
+            "radial-gradient(ellipse at center, rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 22%, rgba(255,255,255,0.70) 42%, rgba(255,255,255,0) 65%)",
+          borderRadius: "50%",
+        }}
+      />
+
+      {/* Static rings + radial lines */}
+      <svg
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 1440 800"
+        preserveAspectRatio="xMidYMid slice"
+        fill="none"
+      >
+        {/* Radial dotted lines */}
+        {RADIAL_LINES.map(({ x2, y2, stroke }, i) => (
+          <line
+            key={i}
+            x1={CX} y1={CY}
+            x2={x2} y2={y2}
+            stroke={stroke}
+            strokeWidth="1"
+            strokeDasharray="3 13"
+          />
+        ))}
+
+        {/* Static depth rings */}
+        <circle cx={CX} cy={CY} r="200" stroke="rgba(37,99,235,0.035)"  strokeWidth="1" />
+        <circle cx={CX} cy={CY} r="340" stroke="rgba(124,58,237,0.025)" strokeWidth="1" />
+        <circle cx={CX} cy={CY} r="480" stroke="rgba(37,99,235,0.018)"  strokeWidth="1" />
+        <circle cx={CX} cy={CY} r="620" stroke="rgba(124,58,237,0.012)" strokeWidth="1" />
+
+        {/* Intersection nodes — ring × line dots */}
+        {INTERSECTION_NODES.map(({ cx, cy, fill, key }) => (
+          <circle key={key} cx={cx} cy={cy} r="2.5" fill={fill} />
+        ))}
+      </svg>
+
+      {/* Pulsing rings */}
+      {PULSE_RINGS.map(({ delay, color }, i) => (
+        <motion.div
+          key={i}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{ width: 130, height: 130, border: `1.5px solid ${color}` }}
+          animate={{ scale: [1, 5.5], opacity: [0, 0.28, 0] }}
+          transition={{ duration: 7, delay, repeat: Infinity, ease: "easeOut" }}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ─── Logo card ────────────────────────────────────────────────────────────────
 
 function LogoCard({ name, domain }: Integration) {
@@ -149,26 +266,31 @@ export default function IntegrationsSection() {
 
   return (
     <section className="bg-white py-24 px-6 relative overflow-hidden">
-      <JourneyBackground tone="light" nodes={[
-        { icon: "Zap",          x: 5,  y: 30, delay: 0   },
-        { icon: "GitBranch",    x: 28, y: 72, delay: 150 },
-        { icon: "Package",      x: 52, y: 18, delay: 300 },
-        { icon: "ArrowRight",   x: 76, y: 65, delay: 450 },
-        { icon: "CheckCircle2", x: 94, y: 35, delay: 600 },
-      ]} paths={[
-        "M 5,30 C 14,48 21,62 28,72",
-        "M 28,72 C 38,52 45,30 52,18",
-        "M 52,18 C 62,36 70,54 76,65",
-        "M 76,65 C 83,52 89,42 94,35",
-      ]} />
+      <RadarBackground />
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto relative z-10">
 
         {/* ── Header ── */}
         <AnimateIn className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-neutral-100 border border-neutral-200 rounded-full px-4 py-1.5 mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
-            <span className="text-neutral-500 text-xs font-semibold tracking-widest uppercase">
+          <div
+            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6"
+            style={{
+              background: "rgba(37,99,235,0.08)",
+              border: "1px solid rgba(37,99,235,0.20)",
+            }}
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)" }}
+            />
+            <span
+              className="text-xs font-semibold tracking-widest uppercase"
+              style={{
+                background: "linear-gradient(90deg, #2563EB, #7C3AED)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
               Integrations
             </span>
           </div>
@@ -203,9 +325,10 @@ export default function IntegrationsSection() {
                   onClick={() => handleSelect(i)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                     isActive
-                      ? "bg-[#0b0f1a] text-white border-[#0b0f1a] shadow-md"
+                      ? "text-white border-transparent shadow-md"
                       : "bg-white text-neutral-500 border-neutral-200 hover:border-neutral-300 hover:text-neutral-700"
                   }`}
+                  style={isActive ? { background: "linear-gradient(135deg, #1d4ed8, #6d28d9)" } : undefined}
                 >
                   <Icon
                     size={14}

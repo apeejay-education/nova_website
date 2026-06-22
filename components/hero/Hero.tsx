@@ -1,155 +1,118 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { ChevronRight, ChevronDown, Play, X } from "lucide-react";
-import Wordmark from "@/components/ui/Wordmark";
+import { ChevronRight, Play } from "lucide-react";
 import SeamlessVideo from "@/components/ui/SeamlessVideo";
+import NovaHeroDashboard from "@/components/hero/NovaHeroDashboard";
 
 interface HeroProps {
   onBookDemo: () => void;
+  onWatchVideo: () => void;
 }
 
-function VideoModal({ onClose }: { onClose: () => void }) {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [onClose]);
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm px-4"
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-4xl aspect-video rounded-2xl overflow-hidden shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <video
-          className="w-full h-full object-cover"
-          src="/assets/videos/product-demo-preview.mp4"
-          autoPlay
-          controls
-          playsInline
-        />
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-        >
-          <X size={15} />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-export default function Hero({ onBookDemo }: HeroProps) {
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
-
+export default function Hero({ onBookDemo, onWatchVideo }: HeroProps) {
   return (
     <>
-      <div className="relative w-full h-screen overflow-hidden bg-[#0b0f1a]">
+      <div className="relative w-full bg-[#0b0f1a]">
 
-        {/* Background video */}
-        <SeamlessVideo src="/assets/videos/hero-principal-loop.mp4" />
+        {/* Background video — constrained to 100vh */}
+        <div className="absolute inset-x-0 top-0 overflow-hidden" style={{ height: "100vh" }}>
+          <SeamlessVideo src="/assets/videos/hero-principal-loop.mp4" />
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/88" />
+          {/* Base gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/25 to-black/60" />
+
+          {/* Radial vignette — darkens the zone behind the headline text */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse 70% 55% at 50% 38%, rgba(0,0,0,0.52) 0%, transparent 100%)",
+            }}
+            aria-hidden="true"
+          />
+        </div>
 
         {/* Content */}
-        <div className="relative z-10 h-full flex flex-col">
+        <div className="relative z-10 flex flex-col">
 
           {/* Center content */}
-          <div className="flex-1 flex flex-col items-center justify-center px-6 pt-16 pb-4 text-center">
+          <div className="flex flex-col items-center px-6 pt-40 text-center">
 
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
-              <span className="w-2 h-2 rounded-full bg-white/60 shrink-0" />
-              <span
-                style={{
-                  fontWeight: 500,
-                  fontSize: 14,
-                  letterSpacing: "-0.02em",
-                  color: "#ffffff",
-                  lineHeight: 1,
-                }}
-              >
-                Cadence Nova
-              </span>
-            </div>
-
-            {/* Bare headline */}
+            {/* Canonical headline */}
             <h1
-              className="mt-10 text-white max-w-4xl"
+              className="text-white max-w-5xl"
               style={{
-                fontSize: "clamp(38px, 6.5vw, 76px)",
-                lineHeight: 1.04,
+                fontSize: "clamp(44px, 6vw, 80px)",
+                lineHeight: 1.05,
                 fontWeight: 500,
-                letterSpacing: "-0.025em",
+                letterSpacing: "-0.03em",
+                textShadow: "0 2px 24px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.30)",
               }}
             >
-              Complete school{" "}
-              <span
-                style={{
-                  fontFamily: "var(--font-instrument-serif), 'Georgia', serif",
-                  fontStyle: "italic",
-                  fontWeight: 400,
-                }}
-              >
-                intelligence.
+              School management.
+              <br />
+              School{" "}
+              <span className="relative inline-block">
+                {/* Subtle warm highlight behind "intelligence" */}
+                <span
+                  className="absolute rounded-lg pointer-events-none"
+                  style={{
+                    inset: "-3px -6px",
+                    background: "linear-gradient(90deg, rgba(233,30,140,0.18) 0%, rgba(249,115,22,0.18) 100%)",
+                  }}
+                  aria-hidden="true"
+                />
+                <span
+                  style={{
+                    fontFamily: "var(--font-instrument-serif), 'Georgia', serif",
+                    fontStyle: "italic",
+                    fontWeight: 400,
+                    background: "linear-gradient(90deg, #E91E8C, #F97316)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    position: "relative",
+                  }}
+                >
+                  intelligence.
+                </span>
               </span>
               <br />
               One platform.
             </h1>
 
-            {/* Stat line — glassmorphism pill */}
-            <div className="mt-10 bg-white/[0.08] backdrop-blur-sm border border-white/[0.15] rounded-full px-6 py-2.5">
-              <p className="text-white/70 text-[13px] tracking-widest uppercase">
+            {/* Stat line — frosted glass pill */}
+            <div className="mt-14 bg-white/[0.12] backdrop-blur-sm border border-white/[0.20] rounded-full px-6 py-2.5">
+              <p className="text-white/75 text-[12px] tracking-widest uppercase">
                 8 Modules&nbsp;&nbsp;·&nbsp;&nbsp;AI Queries&nbsp;&nbsp;·&nbsp;&nbsp;Hotkey Enabled
               </p>
             </div>
 
-            {/* CTAs */}
-            <div className="mt-12 flex items-center gap-6">
+            {/* CTAs — above the dashboard, visible at the fold */}
+            <div className="flex items-center gap-6 mt-12">
               <button
                 onClick={onBookDemo}
-                className="inline-flex items-center gap-3 bg-white text-[#0b0f1a] rounded-full pl-6 pr-2 py-2.5 hover:bg-white/90 transition-colors"
-                style={{ fontSize: 14, fontWeight: 500 }}
+                className="inline-flex items-center gap-3 bg-white text-[#0b0f1a] rounded-full pl-7 pr-2.5 py-3 hover:bg-white/90 transition-colors"
+                style={{ fontSize: 15, fontWeight: 500 }}
               >
                 Book a Demo
-                <span className="w-7 h-7 rounded-full bg-[#0b0f1a]/10 flex items-center justify-center">
-                  <ChevronRight size={14} strokeWidth={2.5} />
+                <span className="w-8 h-8 rounded-full bg-[#0b0f1a]/10 flex items-center justify-center">
+                  <ChevronRight size={15} strokeWidth={2.5} />
                 </span>
               </button>
 
-              {/* Pulsing gradient play button — icon only */}
+              {/* Pulsing gradient play button */}
               <button
-                onClick={() => setVideoModalOpen(true)}
+                onClick={onWatchVideo}
                 className="relative w-14 h-14 flex items-center justify-center"
                 aria-label="Play Exclusive Preview"
               >
-                {/* Outer pulse ring 1 */}
                 <span
                   className="absolute inset-0 rounded-full animate-ping"
-                  style={{
-                    background: "linear-gradient(135deg, #2563EB, #7C3AED)",
-                    opacity: 0.25,
-                  }}
+                  style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)", opacity: 0.25 }}
                 />
-                {/* Outer pulse ring 2 — delayed */}
                 <span
                   className="absolute inset-[-6px] rounded-full animate-ping"
-                  style={{
-                    background: "linear-gradient(135deg, #2563EB, #7C3AED)",
-                    opacity: 0.12,
-                    animationDelay: "0.4s",
-                  }}
+                  style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)", opacity: 0.12, animationDelay: "0.4s" }}
                 />
-                {/* Button core */}
                 <span
                   className="relative w-14 h-14 rounded-full flex items-center justify-center transition-transform hover:scale-105"
                   style={{
@@ -161,17 +124,38 @@ export default function Hero({ onBookDemo }: HeroProps) {
                 </span>
               </button>
             </div>
+
+            {/* Product preview — dashboard flows past 100vh fold */}
+            <div className="mt-20 w-full mb-16">
+              <NovaHeroDashboard />
+            </div>
           </div>
 
-          {/* Scroll indicator */}
-          <div className="flex flex-col items-center gap-1.5 pb-8 text-white/35">
-            <span className="text-[10px] tracking-[0.15em] font-medium uppercase">Scroll</span>
-            <ChevronDown size={14} strokeWidth={2} />
+          {/* Wave divider — dark hero → white next section */}
+          <div className="relative bg-white overflow-hidden" style={{ height: 96 }}>
+            <svg
+              viewBox="0 0 1440 96"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute inset-0 w-full h-full"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="hero-wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stopColor="#2563EB" />
+                  <stop offset="100%" stopColor="#7C3AED" />
+                </linearGradient>
+              </defs>
+              <path d="M0,0 L1440,0 L1440,52 C1120,92 320,8 0,52 Z" fill="#0b0f1a" />
+              <path
+                d="M0,46 C320,2 1120,86 1440,46 L1440,58 C1120,98 320,14 0,58 Z"
+                fill="url(#hero-wave-grad)"
+                opacity="0.9"
+              />
+            </svg>
           </div>
         </div>
       </div>
-
-      {videoModalOpen && <VideoModal onClose={() => setVideoModalOpen(false)} />}
     </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import {
   ChevronRight,
   UserPlus, CreditCard, Bus, BookOpen,
@@ -471,22 +472,50 @@ const MOCKUP_COMPONENTS: Record<MockupKey, React.ComponentType> = {
 
 const CAROUSEL_ITEMS: { time: string; name: string; micro: string; mockup: MockupKey }[] = [
   { time: "7:45 AM",  name: "Admissions & SIS", micro: "Every student. Every detail. One profile.",      mockup: "admissions"    },
+  { time: "8:30 AM",  name: "Attendance",       micro: "Mark 400 students in under 30 seconds.",         mockup: "attendance"    },
   { time: "9:00 AM",  name: "Fee Management",   micro: "Collect fees in seconds. Track everything.",     mockup: "fees"          },
   { time: "10:30 AM", name: "Transport",        micro: "GPS-tracked buses. Live parent alerts.",          mockup: "transport"     },
   { time: "2:00 PM",  name: "Campus Life",      micro: "Library, hostel, labs — all connected.",         mockup: "campus"        },
-  { time: "8:30 AM",  name: "Attendance",       micro: "Mark 400 students in under 30 seconds.",         mockup: "attendance"    },
-  { time: "5:00 PM",  name: "Hostel",           micro: "Room allocation, food, laundry — unified.",      mockup: "hostel"        },
   { time: "4:30 PM",  name: "LMS",              micro: "Assignments, lessons, grades — digital-first.",  mockup: "lms"           },
+  { time: "5:00 PM",  name: "Hostel",           micro: "Room allocation, food, laundry — unified.",      mockup: "hostel"        },
   { time: "6:00 PM",  name: "Communication",    micro: "SMS, app push, email — one click.",              mockup: "communication" },
 ];
 
 // ─── Section ──────────────────────────────────────────────────────────────────
 
-export default function PlatformSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+const CARD_WIDTH = 336; // 320px card + 16px gap
+const AUTO_INTERVAL = 3200;
 
-  const scroll = (dir: "left" | "right") =>
-    scrollRef.current?.scrollBy({ left: dir === "right" ? 340 : -340, behavior: "smooth" });
+export default function PlatformSection() {
+  const scrollRef  = useRef<HTMLDivElement>(null);
+  const paused     = useRef(false);
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  const scroll = (dir: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir === "right" ? CARD_WIDTH : -CARD_WIDTH, behavior: "smooth" });
+  };
+
+  const goTo = (idx: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ left: idx * CARD_WIDTH, behavior: "smooth" });
+    setActiveIdx(idx);
+  };
+
+  // Auto-scroll: loop through all cards, pause on hover
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (paused.current) return;
+      setActiveIdx(prev => {
+        const next = (prev + 1) % CAROUSEL_ITEMS.length;
+        scrollRef.current?.scrollTo({ left: next * CARD_WIDTH, behavior: "smooth" });
+        return next;
+      });
+    }, AUTO_INTERVAL);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <section className="bg-white py-24 overflow-hidden relative">
@@ -524,18 +553,62 @@ export default function PlatformSection() {
 
       {/* Carousel */}
       <div className="relative">
+
+        {/* Timeline spine — decorative path behind cards */}
+        <div className="absolute inset-x-0 top-0 bottom-6 pointer-events-none overflow-hidden" aria-hidden="true">
+          <svg
+            viewBox="0 0 1440 260"
+            preserveAspectRatio="xMidYMid slice"
+            fill="none"
+            className="w-full h-full"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="spine-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stopColor="#2563EB" stopOpacity="0.35" />
+                <stop offset="50%"  stopColor="#7C3AED" stopOpacity="0.45" />
+                <stop offset="100%" stopColor="#2563EB" stopOpacity="0.25" />
+              </linearGradient>
+              <linearGradient id="node-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stopColor="#2563EB" />
+                <stop offset="100%" stopColor="#7C3AED" />
+              </linearGradient>
+            </defs>
+            {/* Curved spine path */}
+            <path
+              d="M 0,130 C 90,90 170,170 270,120 C 370,70 450,160 540,110 C 640,60 720,150 820,100 C 920,50 1000,140 1100,90 C 1200,40 1300,120 1440,80"
+              stroke="url(#spine-grad)"
+              strokeWidth="1.5"
+              strokeDasharray="6 4"
+            />
+            {/* Node dots at each module station */}
+            {[90, 270, 450, 630, 810, 990, 1170, 1350].map((x, i) => {
+              const ys = [108, 120, 134, 107, 122, 93, 107, 88];
+              return (
+                <circle key={i} cx={x} cy={ys[i]} r="3.5" fill="url(#node-grad)" opacity="0.7" />
+              );
+            })}
+          </svg>
+        </div>
+
         <div
           ref={scrollRef}
           className="flex gap-4 overflow-x-auto pb-6 px-6"
           style={{ scrollSnapType: "x mandatory", scrollbarWidth: "none", msOverflowStyle: "none" }}
+          onMouseEnter={() => { paused.current = true; }}
+          onMouseLeave={() => { paused.current = false; }}
         >
-          {CAROUSEL_ITEMS.map((item) => {
+          {CAROUSEL_ITEMS.map((item, i) => {
             const Mockup = MOCKUP_COMPONENTS[item.mockup];
             return (
-              <div
+              <motion.div
                 key={item.mockup}
-                className="shrink-0 w-[300px] sm:w-[320px] rounded-2xl overflow-hidden border border-neutral-200 bg-white flex flex-col shadow-sm hover:shadow-md transition-shadow"
+                className="shrink-0 w-[300px] sm:w-[320px] rounded-2xl overflow-hidden border border-neutral-200 bg-white flex flex-col shadow-sm hover:shadow-md transition-shadow relative z-10"
                 style={{ scrollSnapAlign: "start" }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
               >
                 {/* Visual: chrome strip + mockup */}
                 <div className="w-full aspect-[4/3] flex flex-col overflow-hidden">
@@ -552,7 +625,7 @@ export default function PlatformSection() {
                   </h3>
                   <p className="text-[13px] text-neutral-500 mt-1">{item.micro}</p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
 
@@ -560,27 +633,45 @@ export default function PlatformSection() {
           <div className="shrink-0 w-2" />
         </div>
 
-        {/* Scroll controls */}
-        <div className="flex items-center gap-2 px-6 mt-2">
-          <button
-            onClick={() => scroll("left")}
-            className="w-9 h-9 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-500 hover:border-neutral-400 hover:text-[#111827] transition-colors"
-            aria-label="Scroll left"
-          >
-            <ChevronRight size={16} className="rotate-180" />
-          </button>
-          <button
-            onClick={() => scroll("right")}
-            className="w-9 h-9 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-500 hover:border-neutral-400 hover:text-[#111827] transition-colors"
-            aria-label="Scroll right"
-          >
-            <ChevronRight size={16} />
-          </button>
-          <span className="text-[12px] text-neutral-400 ml-2">
-            Scroll to explore all 8 modules
-          </span>
+        {/* Centered scroll controls + dot indicators */}
+        <div className="flex flex-col items-center gap-3 mt-4">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => { paused.current = true; scroll("left"); }}
+              className="w-9 h-9 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-500 hover:border-neutral-400 hover:text-[#111827] transition-colors"
+              aria-label="Scroll left"
+            >
+              <ChevronRight size={16} className="rotate-180" />
+            </button>
+
+            {/* Dot indicators */}
+            <div className="flex items-center gap-1.5">
+              {CAROUSEL_ITEMS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => { paused.current = true; goTo(i); }}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width:      i === activeIdx ? 20 : 6,
+                    height:     6,
+                    background: i === activeIdx ? "#2563EB" : "#d1d5db",
+                  }}
+                  aria-label={`Go to module ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={() => { paused.current = true; scroll("right"); }}
+              className="w-9 h-9 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-500 hover:border-neutral-400 hover:text-[#111827] transition-colors"
+              aria-label="Scroll right"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
         </div>
       </div>
+
     </section>
   );
 }

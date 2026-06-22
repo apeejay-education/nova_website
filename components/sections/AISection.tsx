@@ -379,6 +379,7 @@ export default function AISection() {
 
         </div>
       </div>
+
     </section>
   );
 }

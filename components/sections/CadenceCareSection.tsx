@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import JourneyBackground from "@/components/ui/JourneyBackground";
 import SeamlessVideo from "@/components/ui/SeamlessVideo";
 
-export default function CadenceCareSection() {
+interface CadenceCareSectionProps {
+  onBookDemo: () => void;
+}
+
+export default function CadenceCareSection({ onBookDemo }: CadenceCareSectionProps) {
   return (
     <section className="relative overflow-hidden min-h-[70vh] flex items-center justify-center bg-[#0b0f1a]">
 
@@ -31,9 +36,29 @@ export default function CadenceCareSection() {
 
       {/* Content */}
       <AnimateIn className="relative z-10 max-w-4xl mx-auto px-6 py-24 text-center">
-        <div className="inline-flex items-center gap-2 bg-white/[0.07] border border-white/[0.12] rounded-full px-4 py-1.5 mb-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
-          <span className="text-white/60 text-xs font-semibold tracking-widest uppercase">Cadence Care · Nova Lounge</span>
+        {/* Badge — blue-purple treatment */}
+        <div
+          className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8"
+          style={{
+            background: "rgba(37,99,235,0.10)",
+            border: "1px solid rgba(37,99,235,0.30)",
+            boxShadow: "0 0 24px rgba(37,99,235,0.12)",
+          }}
+        >
+          <span
+            className="w-1.5 h-1.5 rounded-full"
+            style={{ background: "linear-gradient(135deg, #2563EB, #7C3AED)" }}
+          />
+          <span
+            className="text-xs font-semibold tracking-widest uppercase"
+            style={{
+              background: "linear-gradient(90deg, #60A5FA, #A78BFA)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            Cadence Care · Nova Lounge
+          </span>
         </div>
 
         <blockquote
@@ -41,27 +66,56 @@ export default function CadenceCareSection() {
           style={{ fontSize: "clamp(24px, 4.5vw, 50px)" }}
         >
           We don&apos;t hand over software.{" "}
-          <span
-            style={{
-              fontFamily: "var(--font-instrument-serif), 'Georgia', serif",
-              fontStyle: "italic",
-              fontWeight: 400,
-            }}
-          >
-            We deploy infrastructure.
+          <span className="relative inline">
+            {/* Subtle blue-purple highlight behind the italic phrase */}
+            <span
+              className="absolute rounded-lg pointer-events-none"
+              style={{
+                inset: "-3px -6px",
+                background: "linear-gradient(90deg, rgba(37,99,235,0.18) 0%, rgba(124,58,237,0.18) 100%)",
+              }}
+              aria-hidden="true"
+            />
+            <span
+              style={{
+                fontFamily: "var(--font-instrument-serif), 'Georgia', serif",
+                fontStyle: "italic",
+                fontWeight: 400,
+                background: "linear-gradient(90deg, #60A5FA, #A78BFA)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                position: "relative",
+              }}
+            >
+              We deploy infrastructure.
+            </span>
           </span>{" "}
           Our team stays on-site until your entire school is live.
         </blockquote>
 
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* Primary CTA */}
+          <button
+            onClick={onBookDemo}
+            className="inline-flex items-center gap-2.5 rounded-full pl-6 pr-2 py-2.5 text-[14px] font-medium text-white transition-all hover:opacity-90"
+            style={{
+              background: "linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)",
+              boxShadow: "0 0 32px rgba(37,99,235,0.35), 0 4px 16px rgba(0,0,0,0.30)",
+            }}
+          >
+            Book a Demo
+            <span className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
+              <ChevronRight size={13} strokeWidth={2.5} />
+            </span>
+          </button>
+
+          {/* Secondary link */}
           <Link
             href="/cadence-care"
-            className="inline-flex items-center gap-2 text-white/75 text-sm font-medium border border-white/20 rounded-full px-6 py-2.5 hover:bg-white/10 transition-colors"
+            className="text-white/50 text-sm font-medium hover:text-white/75 transition-colors"
           >
-            Explore Cadence Care
-            <span className="text-white/35">→</span>
+            Explore Cadence Care →
           </Link>
-          <p className="text-white/25 text-xs">Standard (+50%) · Pro (+100%) of base plan</p>
         </div>
       </AnimateIn>
 
