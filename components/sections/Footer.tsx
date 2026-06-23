@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ArrowUpRight } from "lucide-react";
 import { FOOTER_COLUMNS, FOOTER_COPY_RIGHT } from "@/lib/constants";
+import NovaLogo from "@/components/ui/NovaLogo";
 
 function ExpressInterestForm() {
   const [name,   setName]   = useState("");
@@ -141,11 +142,10 @@ export default function Footer({ onBookDemo }: FooterProps) {
         <div className="max-w-7xl mx-auto">
           {/* Wordmark */}
           <div className="mb-10">
-            <Link href="/" className="flex items-baseline gap-0.5 w-fit">
-              <span className="text-white/60 font-light text-xl tracking-tight">Cadence</span>
-              <span className="text-white font-bold text-xl tracking-tight">Nova</span>
+            <Link href="/" className="inline-block">
+              <NovaLogo dark={true} />
             </Link>
-            <p className="mt-2 text-[#4B5563] text-sm max-w-xs">
+            <p className="mt-1 text-white/40 text-sm max-w-xs">
               AI-powered school management. Built for India.
             </p>
           </div>
@@ -154,35 +154,54 @@ export default function Footer({ onBookDemo }: FooterProps) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             {FOOTER_COLUMNS.map((col) => (
               <div key={col.heading}>
-                <p className="text-white/80 font-medium text-sm mb-4">{col.heading}</p>
+                <p className="text-white font-semibold text-sm mb-4">{col.heading}</p>
                 <ul className="space-y-2.5">
-                  {col.links.map((link) => (
-                    <li key={link.label}>
-                      <Link
-                        href={link.href}
-                        className="text-[#6B7280] text-sm hover:text-white transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
+                  {col.links.map((link) => {
+                    const isExternal = "external" in link && link.external;
+                    const hasBadge = "badge" in link && link.badge;
+                    return (
+                      <li key={link.label}>
+                        <Link
+                          href={link.href}
+                          target={isExternal ? "_blank" : undefined}
+                          rel={isExternal ? "noopener noreferrer" : undefined}
+                          className="inline-flex items-center gap-1.5 text-white/65 text-sm hover:text-white transition-colors"
+                        >
+                          {link.label}
+                          {isExternal && <ArrowUpRight size={11} className="text-[#4B5563]" />}
+                          {hasBadge && (
+                            <span
+                              className="rounded-full px-1.5 py-0.5 text-[9px] font-bold tracking-wide uppercase"
+                              style={{
+                                background: "rgba(245,158,11,0.15)",
+                                color: "#D97706",
+                                border: "1px solid rgba(245,158,11,0.25)",
+                              }}
+                            >
+                              {link.badge}
+                            </span>
+                          )}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
           </div>
 
           {/* Bottom bar */}
-          <div className="border-t border-white/[0.07] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-[#4B5563] text-xs">{FOOTER_COPY_RIGHT}</p>
-            <div className="flex items-center gap-4">
-              <Link href="#" className="text-[#4B5563] text-xs hover:text-white transition-colors">
-                Privacy Policy
-              </Link>
-              <span className="text-[#374151]">·</span>
-              <Link href="#" className="text-[#4B5563] text-xs hover:text-white transition-colors">
-                Terms of Service
-              </Link>
-            </div>
+          <div className="border-t border-white/[0.10] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-white/40 text-xs">{FOOTER_COPY_RIGHT}</p>
+            <Link
+              href="https://cadenceinfotech.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 text-xs hover:text-white/70 transition-colors inline-flex items-center gap-1"
+            >
+              cadenceinfotech.com
+              <ArrowUpRight size={10} />
+            </Link>
           </div>
         </div>
       </footer>

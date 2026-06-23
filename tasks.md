@@ -316,6 +316,92 @@
 
 ---
 
+## Phase 8 — Navigation & Site Architecture Redesign
+> Decisions locked 2026-06-22. Build in order — nav shell first, then pages.
+
+**Final nav:** `Solutions | Pricing | Resources | Company | Client Portal | [Book a Demo]`
+**Solutions mega-menu:** CBSE & ICSE (Live) · IB & Cambridge (Coming Soon) · Groups & Chains (Live)
+**Footer:** 4 columns — Nova · Solutions · Resources · Company (with WhatsApp + legal)
+
+- [ ] **N1** Update `lib/constants.ts`
+  - Replace `NAV_ITEMS` with new 4-item structure + dropdowns config
+  - Add `SOLUTIONS_ITEMS`, `RESOURCES_ITEMS`, `COMPANY_ITEMS` arrays with labels, hrefs, descriptions, status badges
+  - Update `FOOTER_COLUMNS` to new 4-column structure (Nova / Solutions / Resources / Company)
+  - Add WhatsApp link constant (`wa.me/91XXXXXXXXXX`)
+  - Update pricing to show `$1 USD` benchmark + `₹35` launch offer framing
+  - Acceptance: No nav/footer hardcodes in components; all copy sourced from constants
+
+- [ ] **N2** Navbar mega-menu redesign (`components/nav/Navbar.tsx`)
+  - Remove: Platform, AppStore, Cadence Care, old Resources from nav
+  - Add: Solutions (mega-menu panel, ~480px wide), Resources (simple dropdown), Company (simple dropdown)
+  - Solutions mega-menu: each item has icon, title, 1-line description, Coming Soon badge where applicable
+  - Resources + Company: clean minimal dropdown cards
+  - Replace "Login" with "Client Portal" text link (links to Nova app URL)
+  - Transparent-on-mount + floating pill scroll states preserved
+  - Mobile drawer updated to match new structure
+  - Acceptance: All dropdowns open/close correctly; mega-menu keyboard accessible; mobile drawer shows all new items
+
+- [ ] **N3** Footer redesign (`components/sections/Footer.tsx`)
+  - 4 columns: Nova · Solutions · Resources · Company
+  - Nova column: Homepage, Pricing, Book a Demo
+  - Solutions column: CBSE & ICSE, IB & Cambridge (Coming Soon tag), Groups & Chains
+  - Resources column: Product Updates, Video Demos, Blog ↗, Help & Support ↗, WhatsApp Us ↗
+  - Company column: About Nova, Contact Us, Cadence Infotech ↗, Privacy Policy, Terms of Service
+  - Bottom bar: copyright only
+  - Acceptance: All links correct; WhatsApp opens wa.me; external links open new tab; mobile collapses cleanly
+
+- [ ] **N4** Pricing page redesign (`app/pricing/page.tsx`)
+  - Hero: global benchmark `$1 / student / month` (muted/struck) → `₹35 / student / month` (bold, launch offer badge)
+  - "Introductory Launch Pricing" framing
+  - 8 included modules checklist
+  - Cadence Care upsell (Standard / Pro)
+  - Book a Demo CTA
+  - Same dark split aesthetic as /book-demo page
+  - Acceptance: Both price points visible; $1 USD clearly a benchmark; ₹35 is the hero number
+
+- [ ] **N5** Solutions / CBSE & ICSE Schools page (`app/solutions/cbse-icse/page.tsx`)
+  - Curriculum-specific hero headline + subtext
+  - 4 module spotlights most relevant to CBSE/ICSE: Fees, Attendance, SIS, Communication
+  - AI feature highlight (Ask Nova)
+  - Book a Demo CTA
+  - SEO metadata: title "School ERP for CBSE & ICSE Schools — Cadence Nova"
+  - Acceptance: Page accessible at `/solutions/cbse-icse`; all content curriculum-specific
+
+- [ ] **N6** Solutions / Groups & Chains page (`app/solutions/groups-chains/page.tsx`)
+  - Pain-led hero: multi-campus visibility, centralised fee management, shared transport
+  - 4 module spotlights: SIS (multi-campus), Fees, Transport, Communication
+  - AI feature highlight (Nova Command ⌘K for ops leads)
+  - Book a Demo CTA
+  - SEO metadata: title "Multi-Branch School ERP — Cadence Nova"
+  - Acceptance: Page accessible at `/solutions/groups-chains`
+
+- [ ] **N7** Solutions / IB & Cambridge Schools page (`app/solutions/ib-cambridge/page.tsx`)
+  - Coming Soon treatment (same as Tell Nova badge pattern)
+  - Teaser hero: "Built for IB & Cambridge Schools — Coming Soon"
+  - Express Interest form (name + email + school) — same component as footer pre-footer
+  - SEO metadata: title "IB & Cambridge School ERP — Cadence Nova (Coming Soon)"
+  - Acceptance: Page accessible at `/solutions/ib-cambridge`; no false "live" claims
+
+- [ ] **N8** Resources page (`app/resources/page.tsx`)
+  - 3 sections: Product Updates (changelog cards) · Video Walkthroughs (placeholder grid) · Blog (redirects to cadenceinfotech.com/blog)
+  - Same design language as homepage
+  - Acceptance: Page accessible at `/resources`; Blog link opens cadenceinfotech.com/blog in new tab
+
+- [ ] **N9** About Nova page (`app/about/page.tsx`)
+  - Nova story: built by Cadence Infotech (Valedra India / Apeejay Stya Group)
+  - Team/backing section
+  - Cadence Infotech ↗ link prominent
+  - Book a Demo CTA
+  - Acceptance: Page accessible at `/about`
+
+- [ ] **N10** Contact Us page (`app/contact/page.tsx`)
+  - Phone, email, WhatsApp (wa.me link)
+  - Office location (Cadence Infotech address)
+  - Book a Demo form embedded
+  - Acceptance: Page accessible at `/contact`; all contact methods working
+
+---
+
 ## Backlog (Post-Launch)
 
 - [ ] **B1** Resources/blog section with first 5 articles (SEO)

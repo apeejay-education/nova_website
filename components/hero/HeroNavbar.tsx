@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
-import { NAV_ITEMS } from "@/lib/constants";
+import { NAV_SOLUTIONS } from "@/lib/constants";
 
 interface HeroNavbarProps {
   onBookDemo: () => void;
@@ -86,7 +86,7 @@ export default function HeroNavbar({ onBookDemo }: HeroNavbarProps) {
         {open && (
           <div className="absolute top-full left-2 right-2 mt-2 bg-white rounded-2xl shadow-lg border border-neutral-200 p-3 z-20">
             <nav className="flex flex-col gap-1">
-              {NAV_ITEMS.map((item) => (
+              {NAV_SOLUTIONS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

@@ -19,13 +19,47 @@ export const COLORS = {
 
 // ─── Navigation ──────────────────────────────────────────────────────────────
 
-export const NAV_ITEMS = [
-  { label: "Platform", href: "/platform" },
-  { label: "AppStore", href: "/appstore" },
-  { label: "Cadence Care", href: "/cadence-care" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Resources", href: "/resources" },
+export type NavStatus = "live" | "coming-soon";
+
+export const NAV_SOLUTION_GROUPS = [
+  {
+    heading: "By Curriculum Board",
+    items: [
+      { label: "CBSE Schools",      href: "/solutions/cbse",          description: "APAAR, OASIS, UDISE+, HPC — every CBSE mandate handled",    icon: "school",   status: "live"        as NavStatus },
+      { label: "ICSE Schools",      href: "/solutions/icse",          description: "CAREERS export, 80/20 splits, SUPW tracker — ICSE native",   icon: "school",   status: "live"        as NavStatus },
+      { label: "IB Schools",        href: "/solutions/ib",            description: "CAS tracker, IA pipeline, predicted grades — DP ready",      icon: "globe",    status: "coming-soon" as NavStatus },
+      { label: "Cambridge / IGCSE", href: "/solutions/igcse",         description: "CAIE Centre Admin export, coursework IA, A*–G grading",      icon: "globe",    status: "coming-soon" as NavStatus },
+    ],
+  },
+  {
+    heading: "By Institution",
+    items: [
+      { label: "Groups & Chains",   href: "/solutions/groups-chains", description: "Centralised management for multi-branch school networks",    icon: "building", status: "live"        as NavStatus },
+    ],
+  },
 ] as const;
+
+export const NAV_SOLUTIONS = [
+  ...NAV_SOLUTION_GROUPS[0].items,
+  ...NAV_SOLUTION_GROUPS[1].items,
+];
+
+export const NAV_RESOURCES: readonly { label: string; href: string; description: string; external?: boolean }[] = [
+  { label: "Product Updates", href: "/resources", description: "Latest features and changelog" },
+  { label: "Video Walkthroughs", href: "/resources#videos", description: "See Nova in action" },
+  { label: "Blog", href: "https://cadenceinfotech.com/blog", description: "Insights for school leaders", external: true },
+  { label: "Help & Support", href: "#", description: "Docs and guides", external: true },
+];
+
+export const NAV_COMPANY: readonly { label: string; href: string; description: string; external?: boolean }[] = [
+  { label: "About Nova", href: "/about", description: "Our story and the team behind Nova" },
+  { label: "Contact Us", href: "/contact", description: "Talk to us — call, email, or WhatsApp" },
+  { label: "Cadence Infotech", href: "https://cadenceinfotech.com", description: "Our parent company", external: true },
+];
+
+export const WHATSAPP_LINK = "https://wa.me/91XXXXXXXXXX";
+
+export const CLIENT_PORTAL_LINK = "https://app.cadencenova.com";
 
 // ─── Hero copy ────────────────────────────────────────────────────────────────
 
@@ -318,39 +352,41 @@ export const PRE_FOOTER = {
 
 export const FOOTER_COLUMNS = [
   {
-    heading: "Product",
+    heading: "Nova",
     links: [
-      { label: "Platform", href: "/platform" },
-      { label: "AppStore", href: "/appstore" },
-      { label: "Cadence Care", href: "/cadence-care" },
+      { label: "Homepage", href: "/" },
       { label: "Pricing", href: "/pricing" },
+      { label: "Book a Demo", href: "/book-demo" },
     ],
   },
   {
-    heading: "Company",
+    heading: "Solutions",
     links: [
-      { label: "About Cadence", href: "#" },
-      { label: "Cadence Infotech", href: "#" },
-      { label: "ETS / Apeejay Group", href: "#" },
-      { label: "Careers", href: "#" },
+      { label: "CBSE Schools", href: "/solutions/cbse" },
+      { label: "ICSE Schools", href: "/solutions/icse" },
+      { label: "IB Schools", href: "/solutions/ib", badge: "Coming Soon" },
+      { label: "Cambridge / IGCSE", href: "/solutions/igcse", badge: "Coming Soon" },
+      { label: "Groups & Chains", href: "/solutions/groups-chains" },
     ],
   },
   {
     heading: "Resources",
     links: [
-      { label: "Blog", href: "https://cadenceinfotech.com/blog" },
       { label: "Product Updates", href: "/resources" },
-      { label: "Help Docs", href: "#" },
-      { label: "Video Tutorials", href: "/see-nova" },
+      { label: "Video Demos", href: "/resources#videos" },
+      { label: "Blog", href: "https://cadenceinfotech.com/blog", external: true },
+      { label: "Help & Support", href: "#", external: true },
+      { label: "WhatsApp Us", href: "https://wa.me/91XXXXXXXXXX", external: true },
     ],
   },
   {
-    heading: "Contact",
+    heading: "Company",
     links: [
-      { label: "Book a Demo", href: "/book-demo" },
-      { label: "+91-XXXXXXXXXX", href: "tel:+91XXXXXXXXXX" },
-      { label: "hello@cadenceinfotech.com", href: "mailto:hello@cadenceinfotech.com" },
-      { label: "nova.cadenceinfotech.com", href: "/" },
+      { label: "About Nova", href: "/about" },
+      { label: "Contact Us", href: "/contact" },
+      { label: "Cadence Infotech", href: "https://cadenceinfotech.com", external: true },
+      { label: "Privacy Policy", href: "#" },
+      { label: "Terms of Service", href: "#" },
     ],
   },
 ] as const;
