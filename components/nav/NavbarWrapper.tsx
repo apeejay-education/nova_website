@@ -9,13 +9,13 @@ import BookDemoModal from "@/components/forms/BookDemoModal";
 export default function NavbarWrapper() {
   const [modalOpen, setModalOpen] = useState(false);
   const pathname = usePathname();
-  const isHomepage = pathname === "/";
+  const hasDarkHero = pathname === "/" || pathname.startsWith("/solutions/");
 
   return (
     <>
       <Navbar
         onBookDemo={() => setModalOpen(true)}
-        transparentOnMount={isHomepage}
+        transparentOnMount={hasDarkHero}
       />
       <MobileStickyCTA onBookDemo={() => setModalOpen(true)} />
       <BookDemoModal open={modalOpen} onClose={() => setModalOpen(false)} />

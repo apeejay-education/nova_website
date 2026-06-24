@@ -10,6 +10,8 @@ import {
   CheckCircle2, XCircle, ArrowRight, LayoutGrid, Plus, Minus,
   Camera, Play,
 } from "lucide-react";
+import Footer from "@/components/sections/Footer";
+import BookDemoModal from "@/components/forms/BookDemoModal";
 
 // ─── colour tokens ────────────────────────────────────────────────────────────
 const BLUE  = "#2563EB";
@@ -565,6 +567,12 @@ const FAQS = [
   { q: "How does Nova handle NEP 2020 Holistic Progress Cards?",            a: "Nova's HPC module is built natively for all 5 NEP 2020 domains. Teachers enter assessments in bulk, students complete self-assessments from the student app, and the Principal sees a real-time completion dashboard per class." },
 ];
 
+const HERO_CHIPS = [
+  { icon: Shield,        text: "8 CBSE Portals Automated" },
+  { icon: CheckCircle2,  text: "Zero Missed Deadlines" },
+  { icon: CalendarCheck, text: "3 hrs/week Back Per Teacher" },
+];
+
 const HERO_BLOBS = [
   { color: "rgba(37,99,235,0.28)", w: 480, h: 440, top: "-8%",  left: "-6%",  dur: 28, x: [0, 22, -14, 0] as number[], y: [0, -18, 14, 0] as number[] },
   { color: "rgba(37,99,235,0.14)", w: 400, h: 360, top: "40%",  left: "25%",  dur: 34, x: [0, -28, 16, 0] as number[], y: [0, 16, -22, 0] as number[] },
@@ -573,14 +581,33 @@ const HERO_BLOBS = [
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function CbsePageClient() {
-  const [openModule, setOpenModule] = useState<number | null>(null);
-  const [openFaq,    setOpenFaq]    = useState<number | null>(null);
+  const [openModule,  setOpenModule]  = useState<number | null>(null);
+  const [openFaq,     setOpenFaq]     = useState<number | null>(null);
+  const [modalOpen,   setModalOpen]   = useState(false);
 
   return (
     <div className="min-h-screen">
 
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <div className="relative overflow-hidden" style={{ background: DARK }}>
+        {/* Background boomerang video */}
+        <video
+          autoPlay muted loop playsInline
+          poster="/assets/images/hero-cbse-poster.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ opacity: 0.82 }}
+          preload="metadata"
+        >
+          <source src="/assets/videos/hero-cbse.webm" type="video/webm" />
+          <source src="/assets/videos/hero-cbse.mp4" type="video/mp4" />
+        </video>
+
+        {/* Vignette overlay — dark edges, video breathes through center */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(ellipse at 50% 45%, rgba(11,15,26,0.30) 0%, rgba(11,15,26,0.72) 100%)"
+        }} />
+
+        {/* Ambient blobs — visible when video not yet loaded */}
         {HERO_BLOBS.map((b, i) => (
           <motion.div key={i} className="absolute pointer-events-none rounded-full"
             style={{ width: b.w, height: b.h, top: b.top, left: b.left,
@@ -590,63 +617,73 @@ export default function CbsePageClient() {
             transition={{ duration: b.dur, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }} />
         ))}
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-36 pb-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Text content — centered, cinematic */}
+        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-36 pb-28 text-center">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6"
+            style={{ background: "rgba(37,99,235,0.12)", border: "1px solid rgba(37,99,235,0.30)" }}>
+            <Shield size={11} style={{ color: BLIGHT }} />
+            <span className="text-xs font-semibold tracking-widest uppercase"
+              style={{ background: `linear-gradient(90deg, ${BLIGHT}, #e0f2fe)`,
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              CBSE Schools
+            </span>
+          </motion.div>
 
-            {/* Left — copy */}
-            <div>
-              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6"
-                style={{ background: "rgba(37,99,235,0.10)", border: "1px solid rgba(37,99,235,0.28)" }}>
-                <Shield size={11} style={{ color: BLIGHT }} />
-                <span className="text-xs font-semibold tracking-widest uppercase"
-                  style={{ background: `linear-gradient(90deg, ${BLIGHT}, #e0f2fe)`,
-                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  CBSE Schools
-                </span>
-              </motion.div>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-white max-w-5xl mx-auto mb-5"
+            style={{ fontSize: "clamp(44px, 6vw, 80px)", lineHeight: 1.05, fontWeight: 500, letterSpacing: "-0.03em",
+              textShadow: "0 2px 24px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.30)" }}>
+            8 portals. Automated.
+            <br />Every deadline. Met.
+            <br />
+            <span className="relative inline-block">
+              <span className="absolute rounded-lg pointer-events-none" aria-hidden="true"
+                style={{ inset: "-3px -6px", background: "linear-gradient(90deg, rgba(37,99,235,0.22) 0%, rgba(147,197,253,0.18) 100%)" }} />
+              <span style={{ fontFamily: "var(--font-instrument-serif), 'Georgia', serif", fontStyle: "italic", fontWeight: 400,
+                background: `linear-gradient(90deg, ${BLIGHT}, #e0f2fe)`,
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", position: "relative" }}>
+                That&apos;s Nova.
+              </span>
+            </span>
+          </motion.h1>
 
-              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-white leading-tight mb-5"
-                style={{ fontSize: "clamp(30px, 3.8vw, 52px)", fontWeight: 700, letterSpacing: "-0.028em" }}>
-                Your staff didn't sign up
-                <br />for APAAR forms and
-                <br />UDISE+ exports.
-                <br />
-                <span style={{ background: `linear-gradient(90deg, ${BLIGHT}, #e0f2fe)`,
-                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  Nova did.
-                </span>
-              </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-white/55 text-[16px] leading-relaxed mb-8 max-w-2xl mx-auto">
+            8 portals automated. Every CBSE mandate met on time — or Nova flags it first.
+          </motion.p>
 
-              <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-white/50 text-[16px] leading-relaxed mb-8 max-w-lg">
-                8 CBSE compliance portals handled automatically. Every mandate met on time.
-                Every class teacher gets 3 hours a week back.
-              </motion.p>
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+            className="flex items-center gap-4 flex-wrap justify-center mb-10">
+            <Link href="/book-demo"
+              className="inline-flex items-center gap-2 rounded-full pl-6 pr-2.5 py-3 text-[14px] font-semibold text-[#0b0f1a] bg-white hover:bg-white/90 transition-colors">
+              Book a Demo
+              <span className="w-7 h-7 rounded-full bg-[#0b0f1a]/10 flex items-center justify-center">
+                <ChevronRight size={13} strokeWidth={2.5} />
+              </span>
+            </Link>
+            <Link href="/solutions/icse"
+              className="inline-flex items-center gap-1.5 text-[13px] text-white/50 hover:text-white/80 transition-colors">
+              Looking for ICSE? →
+            </Link>
+          </motion.div>
 
-              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                className="flex items-center gap-4 flex-wrap">
-                <Link href="/book-demo"
-                  className="inline-flex items-center gap-2 rounded-full pl-6 pr-2.5 py-3 text-[14px] font-semibold text-[#0b0f1a] bg-white hover:bg-white/90 transition-colors">
-                  Book a Demo
-                  <span className="w-7 h-7 rounded-full bg-[#0b0f1a]/10 flex items-center justify-center">
-                    <ChevronRight size={13} strokeWidth={2.5} />
-                  </span>
-                </Link>
-                <Link href="/solutions/icse"
-                  className="inline-flex items-center gap-1.5 text-[13px] text-white/50 hover:text-white/80 transition-colors">
-                  Looking for ICSE? →
-                </Link>
-              </motion.div>
-            </div>
-
-            {/* Right — hero boomerang placeholder */}
-            <motion.div initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.25 }}>
-              <VideoPlaceholder dark
-                label="Hero Boomerang"
-                prompt="Indian male school admin officer (late 30s, formal shirt) seated at a wooden desk opening a silver laptop, screen faces away from camera, expression shifts from concentration to quiet relief. School trophies softly blurred behind. No text visible anywhere." />
-            </motion.div>
+          {/* Glassmorphism value-prop chips */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {HERO_CHIPS.map((chip, i) => {
+              const ChipIcon = chip.icon;
+              return (
+                <motion.div key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.10 }}
+                  className="flex items-center gap-2 rounded-full px-4 py-2 backdrop-blur-md"
+                  style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.14)" }}>
+                  <ChipIcon size={12} style={{ color: BLIGHT }} />
+                  <span className="text-white/75 text-[12px] font-medium">{chip.text}</span>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
@@ -680,10 +717,13 @@ export default function CbsePageClient() {
             {/* Teacher image placeholder */}
             <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }} transition={{ delay: 0.2 }}>
-              <ImgPlaceholder
-                className="aspect-[4/3]"
-                label="Section Photo — Teacher"
-                prompt="Indian female teacher (40s) standing at the front of a bright CBSE classroom. No tablet, no screens. Students in soft focus at wooden desks behind her. Natural window light. Warm editorial photography. No text or signage visible anywhere in the frame." />
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden">
+                <img
+                  src="/images/cbse-stats-teacher.jpg"
+                  alt="School administrator at desk"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
@@ -868,7 +908,19 @@ export default function CbsePageClient() {
       </section>
 
       {/* ── MODULE ACCORDION ─────────────────────────────────────────────────── */}
-      <div className="bg-white">
+      <div className="relative overflow-hidden bg-white">
+        {/* Dot grid decoration */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          <svg width="100%" height="100%" className="absolute inset-0 opacity-[0.035]">
+            <defs>
+              <pattern id="cbse-dot-grid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="1.5" cy="1.5" r="1.5" fill="#2563EB" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#cbse-dot-grid)" />
+          </svg>
+          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, white 75%)" }} />
+        </div>
         <div className="max-w-4xl mx-auto px-6 py-16">
           <div className="text-center mb-10">
             <p className="text-[11px] font-bold tracking-widest uppercase mb-3"
@@ -968,6 +1020,10 @@ export default function CbsePageClient() {
       {/* ── ASK NOVA ─────────────────────────────────────────────────────────── */}
       <WaveWhiteToDark />
       <div className="relative overflow-hidden" style={{ background: DARK }}>
+        {/* Ambient glow blobs */}
+        <div className="absolute pointer-events-none rounded-full" style={{ width: 560, height: 480, top: "-15%", left: "-8%", background: "radial-gradient(ellipse at center, rgba(37,99,235,0.18) 0%, transparent 70%)", filter: "blur(80px)" }} />
+        <div className="absolute pointer-events-none rounded-full" style={{ width: 440, height: 380, top: "30%", right: "-10%", background: "radial-gradient(ellipse at center, rgba(96,165,250,0.12) 0%, transparent 70%)", filter: "blur(80px)" }} />
+        <div className="absolute pointer-events-none" style={{ inset: 0, background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(37,99,235,0.07) 0%, transparent 70%)" }} />
         <div className="max-w-4xl mx-auto px-6 py-20 text-center">
           <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6"
             style={{ background: "rgba(37,99,235,0.12)", border: "1px solid rgba(37,99,235,0.30)" }}>
@@ -1038,14 +1094,19 @@ export default function CbsePageClient() {
       </div>
 
       {/* ── NOVA LOUNGE + CTA ────────────────────────────────────────────────── */}
-      <div style={{ background: CREAM }}>
-        <div className="max-w-4xl mx-auto px-6 pt-4 pb-24">
+      <div className="relative overflow-hidden" style={{ background: CREAM }}>
+        {/* Subtle radial glow */}
+        <div className="absolute pointer-events-none" style={{ inset: 0, background: "radial-gradient(ellipse 70% 60% at 50% 40%, rgba(37,99,235,0.05) 0%, transparent 65%)" }} />
+        <div className="max-w-4xl mx-auto px-6 pt-4 pb-24 relative z-10">
 
-          {/* Boomerang placeholder */}
-          <div className="mb-8">
-            <VideoPlaceholder
-              label="Nova Lounge Boomerang"
-              prompt="Young Nova implementation consultant (male, late 20s, professional casual) sitting beside an older female school principal (50s, saree, glasses). Both pointing at something off-screen, laughing. School trophies visible behind. Screen not visible. No text anywhere. Warm daylight. 4-second boomerang loop." />
+          <div className="mb-8 rounded-2xl overflow-hidden w-full aspect-video">
+            <video
+              autoPlay muted loop playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+            >
+              <source src="/assets/videos/nova-lounge.mp4" type="video/mp4" />
+            </video>
           </div>
 
           <div className="rounded-3xl p-8"
@@ -1080,6 +1141,8 @@ export default function CbsePageClient() {
         </div>
       </div>
 
+      <Footer onBookDemo={() => setModalOpen(true)} />
+      <BookDemoModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }
