@@ -8,7 +8,7 @@ import {
   CalendarCheck, Bus, BookOpen, Monitor,
   Award, ChevronRight, ChevronDown, Sparkles, MessageSquare, Zap,
   CheckCircle2, XCircle, ArrowRight, LayoutGrid, Plus, Minus,
-  Camera, Play,
+  Camera, Play, Globe, Lock, GraduationCap,
 } from "lucide-react";
 import Footer from "@/components/sections/Footer";
 import BookDemoModal from "@/components/forms/BookDemoModal";
@@ -546,9 +546,10 @@ const FAQS = [
 ];
 
 const HERO_CHIPS = [
-  { icon: Award,     text: "CAREERS Export — One Click" },
-  { icon: Leaf,      text: "SUPW Tracked — 5 Criteria" },
-  { icon: BarChart2, text: "80/20 & 50/50 Automated" },
+  { icon: Award,         text: "ICSE Compliant" },
+  { icon: GraduationCap, text: "NEP 2020 Ready" },
+  { icon: Lock,          text: "DPDP Compliant" },
+  { icon: Globe,         text: "India-Hosted" },
 ];
 
 const HERO_BLOBS = [
@@ -612,8 +613,8 @@ export default function IcsePageClient() {
             className="text-white max-w-5xl mx-auto mb-5"
             style={{ fontSize: "clamp(44px, 6vw, 80px)", lineHeight: 1.05, fontWeight: 500, letterSpacing: "-0.03em",
               textShadow: "0 2px 24px rgba(0,0,0,0.45), 0 1px 4px rgba(0,0,0,0.30)" }}>
-            80/20. SUPW. CAREERS.
-            <br />Built in. Not bolted on.
+            Built for Indian schools.
+            <br />Built for this decade.
             <br />
             <span className="relative inline-block">
               <span className="absolute rounded-lg pointer-events-none" aria-hidden="true"
@@ -628,7 +629,7 @@ export default function IcsePageClient() {
 
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
             className="text-white/55 text-[16px] leading-relaxed mb-8 max-w-2xl mx-auto">
-            Every CISCE quirk built natively. The ERP that actually knows the board.
+            ICSE compliant. NEP 2020 ready. DPDP aligned. Data hosted in India. One platform that covers it all.
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
@@ -704,6 +705,87 @@ export default function IcsePageClient() {
           </div>
         </div>
         <SlashCreamToWhite />
+      </div>
+
+      {/* ── NEP 2020 SECTION ─────────────────────────────────────────────────── */}
+      <div className="bg-white">
+        <div className="max-w-6xl mx-auto px-6 py-20">
+          <div className="text-center mb-14">
+            <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5"
+              style={{ background: "rgba(124,58,237,0.07)", border: "1px solid rgba(124,58,237,0.18)" }}>
+              <GraduationCap size={11} style={{ color: PURPLE }} />
+              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: PURPLE }}>
+                NEP 2020 — Built In, Not Bolted On
+              </span>
+            </motion.div>
+            <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              className="text-[#111827] font-bold leading-tight mb-3"
+              style={{ fontSize: "clamp(24px, 3vw, 40px)", letterSpacing: "-0.02em" }}>
+              Nova is built around<br />the three pillars NEP 2020 demands.
+            </motion.h2>
+            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-neutral-400 text-[15px] max-w-xl mx-auto">
+              Not a compliance add-on. Nova's core modules reflect how NEP 2020 defines student development.
+            </motion.p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: BookOpen,
+                tag: "Nursery → Grade 12",
+                title: "Student Portfolio",
+                body: "Every activity, award, and assessment tagged to a student's record from day one. Builds automatically across years. Exportable as a CV-ready PDF. Shareable as a unique student URL — school-sponsored while enrolled.",
+                badge: "Portfolio Builder",
+              },
+              {
+                icon: BarChart2,
+                tag: "All 5 NEP Domains",
+                title: "Holistic Progress Reports",
+                body: "Beyond marks. All 5 NEP 2020 domains assessed per student — Cognitive, Social-Emotional, Physical, Creative, and Values. Co-curricular tagging, teacher observations, and student self-assessment in one report card.",
+                badge: "HPC Native",
+              },
+              {
+                icon: CheckCircle2,
+                tag: "Outcome-Mapped",
+                title: "Competency-Based Assessment",
+                body: "Grade what students know, not just what they score. Every assessment in Nova maps to learning outcomes — not just marks. ICSE internal component scores feed into a competency profile per student.",
+                badge: "Assessment Engine",
+              },
+            ].map((card, i) => {
+              const CardIcon = card.icon;
+              return (
+                <motion.div key={i}
+                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }} transition={{ delay: i * 0.12 }}
+                  className="rounded-2xl p-7 flex flex-col gap-5 hover:shadow-md transition-shadow"
+                  style={{ background: "#fafafa", border: "1px solid rgba(124,58,237,0.10)" }}>
+                  <div className="flex items-start justify-between">
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+                      style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.16)" }}>
+                      <CardIcon size={20} style={{ color: PURPLE }} />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider rounded-full px-3 py-1"
+                      style={{ background: "rgba(124,58,237,0.07)", color: PURPLE }}>
+                      {card.tag}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-[#111827] font-bold text-[18px] mb-2">{card.title}</h3>
+                    <p className="text-neutral-500 text-[13px] leading-relaxed">{card.body}</p>
+                  </div>
+                  <div className="mt-auto pt-4 border-t border-neutral-100">
+                    <span className="text-[11px] font-semibold tracking-wide" style={{ color: PURPLE }}>
+                      {card.badge} →
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* ── CISCE ASSESSMENT ARCHITECTURE ───────────────────────────────────── */}
@@ -1102,6 +1184,39 @@ export default function IcsePageClient() {
           </div>
         </div>
       </div>
+
+      {/* ── DPDP & TRUST STRIP ───────────────────────────────────────────────── */}
+      <div className="bg-white py-10 border-t border-neutral-100">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+            {[
+              { icon: Globe,        label: "India-Hosted Servers",   sub: "Data never leaves Indian soil" },
+              { icon: Lock,         label: "DPDP Compliant",         sub: "Digital Personal Data Protection Act" },
+              { icon: Award,        label: "256-bit Encrypted",      sub: "End-to-end data security" },
+              { icon: CheckCircle2, label: "99.9% Uptime SLA",       sub: "Enterprise-grade reliability" },
+            ].map((item, i) => {
+              const TrustIcon = item.icon;
+              return (
+                <motion.div key={i}
+                  initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                  className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ background: "rgba(124,58,237,0.07)", border: "1px solid rgba(124,58,237,0.14)" }}>
+                    <TrustIcon size={16} style={{ color: PURPLE }} />
+                  </div>
+                  <div>
+                    <p className="text-[13px] font-semibold text-[#111827] leading-none mb-0.5">{item.label}</p>
+                    <p className="text-[11px] text-neutral-400">{item.sub}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <WaveWhiteToDark />
 
       {/* ── NOVA LOUNGE + CTA ────────────────────────────────────────────────── */}
       <div className="relative overflow-hidden" style={{ background: CREAM }}>

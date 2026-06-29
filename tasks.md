@@ -402,6 +402,23 @@
 
 ---
 
+## Product Feature Ideas — Share With Developer
+
+> These are product (app) feature ideas captured during website strategy sessions. Not website tasks — pass these to the Nova product/dev team.
+
+- [ ] **PF1** Student Portfolio Builder *(HIGH PRIORITY — strong NEP 2020 alignment)*
+  - Teachers tag students in activities (academic, co-curricular, sports, projects) from any module
+  - Portfolio builds automatically and longitudinally from Nursery through Grade 12
+  - Exportable as PDF (CV/resume format) — student can download at any point
+  - Student-publishable: student can mark portfolio as public or share via link
+  - **Unique Student URL**: each enrolled student gets a subdomain/slug profile page (e.g., `nova.school.edu/student/aarav-sharma`) — school-sponsored, active only while student is enrolled
+  - Profile URL acts as a living resume + achievement record — shareable to colleges, employers
+  - Post-graduation: school can choose to keep URL live for alumni or let it expire
+  - **NEP 2020 connection**: directly implements holistic development tracking, 360° assessment evidence, and competency portfolio mandated by NEP
+  - *Note from Anand: discuss with dev team — URL sponsorship model, data retention policy post-graduation, student privacy controls (DPDP compliance)*
+
+---
+
 ## Backlog (Post-Launch)
 
 - [ ] **B1** Resources/blog section with first 5 articles (SEO)
